@@ -1,0 +1,16 @@
+---
+// Word-sized bar (Tufte sparkline): value against the panel max, tick at the equality reference.
+interface Props { value: number | null; max: number; reference?: number; width?: number; highlight?: boolean }
+const { value, max, reference, width = 90, highlight = false } = Astro.props;
+const h = 10;
+const x = (v: number) => Math.max(0, Math.min(width, (v / max) * width));
+---
+{value === null ? (
+  <span class="na">N/A</span>
+) : (
+  <svg class="spark" width={width} height={h} viewBox={`0 0 ${width} ${h}`} aria-hidden="true">
+    <rect x="0" y="4" width={width} height="2" fill="var(--rule)" />
+    <rect x="0" y="2" width={x(value)} height="6" rx="1" fill={highlight ? "var(--brand-ink)" : "var(--ink-3)"} />
+    {reference !== undefined && <rect x={x(reference) - 0.5} y="0" width="1" height={h} fill="var(--ink)" />}
+  </svg>
+)}

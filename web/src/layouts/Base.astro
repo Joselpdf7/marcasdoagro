@@ -1,0 +1,108 @@
+---
+import { url } from "../lib/url.ts";
+import "@fontsource-variable/newsreader/opsz.css";
+import "@fontsource-variable/newsreader/opsz-italic.css";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "../styles/global.css";
+import Mark from "../components/Mark.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  section?: "panorama" | "elos" | "marcas" | "pergunte" | "metodo" | "relatorios" | "documentos";
+}
+const { title, description = "Como as marcas do agro aparecem para o produtor no ambiente digital. Estudo do Olhar Público com 33 marcas em quatro elos.", section } = Astro.props;
+const full = title === "MarcasdoAgro" ? "MarcasdoAgro · Panorama da presença digital do agro" : `${title} · MarcasdoAgro`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const nav = [
+  { href: url("/"), id: "panorama", label: "Panorama" },
+  { href: url("/elos/"), id: "elos", label: "Elos" },
+  { href: url("/marcas/"), id: "marcas", label: "Marcas" },
+  { href: url("/metodo/"), id: "metodo", label: "Método" },
+  { href: url("/relatorios/"), id: "relatorios", label: "Relatórios" },
+];
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {import.meta.env.PUBLIC_NOINDEX === "1" && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:title" content={full} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="theme-color" content="#f6f4ee" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14161c" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" href={url("/favicon.svg")} type="image/svg+xml" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem("theme");
+        if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
+      } catch (_) {}
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+    <header class="site-header">
+      <div class="page">
+        <a class="wordmark" href={url("/")} aria-label="MarcasdoAgro, página inicial">
+          <Mark /> <span>Marcas<i>do</i>Agro</span>
+        </a>
+        <button class="theme-toggle menu-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Abrir menu">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+        <nav class="nav" id="nav" aria-label="Principal">
+          {nav.map((n) => <a href={n.href} aria-current={section === n.id ? "page" : undefined}>{n.label}</a>)}
+          <a class="ask" href={url("/pergunte/")} aria-current={section === "pergunte" ? "page" : undefined}>Pergunte ao estudo</a>
+        </nav>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Alternar tema claro ou escuro">
+          <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.4" fill="none"/><path d="M8 2a6 6 0 0 1 0 12z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+    <main id="conteudo">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="page">
+        <div>
+          <span class="logo-chip"><img src={url("/olhar-publico.png")} alt="Olhar Público" width="226" height="71" /></span>
+          <p>Panorama da presença digital do agro brasileiro. Estudo independente realizado pelo Olhar Público, setembro de 2025 a setembro de 2026.</p>
+        </div>
+        <div>
+          <p><b>O estudo</b><br /><a href={url("/metodo/")}>Método e limites</a><br /><a href={url("/documentos/")}>Base de evidências</a><br /><a href={url("/relatorios/")}>Relatórios em PDF</a></p>
+        </div>
+        <div>
+          <p><b>Leitura</b><br />Os painéis não medem vendas, participação de mercado nem preferência do produtor. Participações só se comparam dentro do mesmo elo. N/A nunca é zero.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      if (document.querySelector(".chart[data-payload]")) void import("../scripts/charts.ts");
+      const root = document.documentElement;
+      document.querySelector("[data-theme-toggle]")?.addEventListener("click", () => {
+        const dark = root.dataset["theme"] ? root.dataset["theme"] === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        const next = dark ? "light" : "dark";
+        root.dataset["theme"] = next;
+        try {
+          localStorage.setItem("theme", next);
+        } catch {
+          /* storage unavailable: theme lasts for this page only */
+        }
+      });
+      const menu = document.querySelector<HTMLButtonElement>(".menu-toggle");
+      menu?.addEventListener("click", () => {
+        const nav = document.getElementById("nav");
+        const open = nav?.classList.toggle("open") ?? false;
+        menu.setAttribute("aria-expanded", String(open));
+      });
+    </script>
+  </body>
+</html>

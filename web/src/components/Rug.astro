@@ -1,0 +1,25 @@
+---
+// Tufte rug + dot: every brand in the panel as a gray tick, this brand as a coloured dot.
+interface Props {
+  values: number[];
+  value: number | null;
+  max: number;
+  color: string;
+  reference?: number;
+  width?: number;
+  label: string;
+}
+const { values, value, max, color, reference, width = 240, label } = Astro.props;
+const h = 22;
+const pad = 6;
+const x = (v: number) => pad + (Math.min(v, max) / max) * (width - pad * 2);
+---
+<svg class="rug" viewBox={`0 0 ${width} ${h}`} width="100%" role="img" aria-label={label}>
+  <line x1={pad} x2={width - pad} y1={h / 2} y2={h / 2} stroke="var(--rule)" stroke-width="1" />
+  {reference !== undefined && <line x1={x(reference)} x2={x(reference)} y1="3" y2={h - 3} stroke="var(--ink-3)" stroke-dasharray="2 2" stroke-width="1" />}
+  {values.map((v) => <line x1={x(v)} x2={x(v)} y1="6" y2={h - 6} stroke="var(--mark-muted)" stroke-width="1.5" />)}
+  {value !== null && <circle cx={x(value)} cy={h / 2} r="5" fill={color} stroke="var(--paper)" stroke-width="1.5" />}
+</svg>
+<style>
+  .rug { display: block; overflow: visible; }
+</style>

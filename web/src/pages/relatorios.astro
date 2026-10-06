@@ -1,0 +1,44 @@
+---
+import { url } from "../lib/url.ts";
+import Base from "../layouts/Base.astro";
+import { statSync } from "node:fs";
+import { join } from "node:path";
+
+const files = [
+  ["01_Sintese_da_Serie.pdf", "Síntese da série", "Leitura transversal dos quatro elos, com a tabela mestra."],
+  ["02_Volume_1_Defensivos.pdf", "Volume 1 · Defensivos agrícolas", "Oito marcas, 28 submétricas."],
+  ["03_Volume_2_Maquinas_Agricolas.pdf", "Volume 2 · Máquinas agrícolas", "Oito marcas, 28 submétricas."],
+  ["04_Volume_3_Fertilizantes.pdf", "Volume 3 · Fertilizantes", "Nove marcas, 28 submétricas."],
+  ["05_Volume_4_Sementes.pdf", "Volume 4 · Sementes", "Oito grupos com 25 submarcas, 30 submétricas."],
+  ["00_Serie_Completa.pdf", "Série completa", "Síntese e os quatro volumes num único arquivo."],
+] as const;
+const size = (f: string) => {
+  try {
+    return `${(statSync(join(process.cwd(), "public", "relatorios", f)).size / 1_048_576).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} MB`;
+  } catch {
+    return "";
+  }
+};
+---
+<Base title="Relatórios" section="relatorios" description="Os relatórios do estudo em PDF: síntese e quatro volumes.">
+  <section class="page" style="padding-top:56px;padding-bottom:96px;">
+    <p class="kicker">Relatórios</p>
+    <h1 style="font-size:clamp(40px,6vw,76px);">Os volumes em PDF</h1>
+    <p class="lead">Cada volume tem de 100 a 150 páginas, com sumário executivo, método, painel, capítulo por marca, limites e anexos de evidência.</p>
+    <ul class="reports">
+      {files.map(([f, t, d]) => (
+        <li>
+          <div><b>{t}</b><span class="muted">{d}</span></div>
+          {size(f) ? <a class="btn" href={url(`/relatorios/${f}`)} download>PDF · {size(f)}</a> : <span class="pill">Em breve</span>}
+        </li>
+      ))}
+    </ul>
+  </section>
+</Base>
+<style>
+  .reports { list-style: none; padding: 0; margin: 48px 0 0; border-top: 1px solid var(--rule-strong); }
+  .reports li { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; border-bottom: 1px solid var(--rule); flex-wrap: wrap; }
+  .reports b { display: block; font: 400 22px/1.2 var(--serif); }
+  .reports .muted { font-size: 14px; }
+  .reports .btn { padding: 11px 16px; font-size: 14px; }
+</style>

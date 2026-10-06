@@ -1,0 +1,41 @@
+---
+import { url } from "../../lib/url.ts";
+import Base from "../../layouts/Base.astro";
+import { serie, elos } from "../../lib/data.ts";
+
+const tipos: Record<string, string> = { protocolo: "Protocolos", regra: "Regras e revisão", resultado: "Resultados", tabela: "Tabelas" };
+---
+<Base title="Base de evidências" section="documentos" description="Os 162 documentos de evidência do estudo, com identificador criptográfico.">
+  <section class="page" style="padding-top:56px;padding-bottom:24px;">
+    <p class="kicker">Consulta verificável</p>
+    <h1 style="font-size:clamp(40px,6vw,76px);">Base de evidências</h1>
+    <p class="lead">Cada número do estudo é rastreável a um destes documentos. O código SHA-256 de cada arquivo permite conferir que o conteúdo não mudou.</p>
+  </section>
+  {elos.map((e) => {
+    const docs = serie.documentos.filter((d) => d.volume === e.volume);
+    return (
+      <section class="section">
+        <div class="page">
+          <h2 style="font-size:clamp(26px,3vw,36px);">Volume {e.volume} · {e.nome} <span class="muted small" style="font-family:var(--sans);">{docs.length} documentos</span></h2>
+          <div class="multiples" style="margin-top:28px;">
+            {Object.entries(tipos).map(([k, label]) => {
+              const list = docs.filter((d) => d.tipo === k).sort((a, b) => a.titulo.localeCompare(b.titulo, "pt-BR"));
+              return list.length > 0 && (
+                <div class="multiple">
+                  <h4>{label}<span>{list.length}</span></h4>
+                  <ul class="doclist">{list.map((d) => <li><a href={url(`/documentos/${d.slug}/`)}>{d.titulo}</a></li>)}</ul>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+</Base>
+<style>
+  .doclist { list-style: none; margin: 0; padding: 0; font-size: 14px; }
+  .doclist li { padding: 7px 0; border-bottom: 1px solid var(--rule); line-height: 1.35; }
+  .doclist a { color: var(--ink); text-decoration: none; }
+  .doclist a:hover { color: var(--brand-ink); text-decoration: underline; }
+</style>

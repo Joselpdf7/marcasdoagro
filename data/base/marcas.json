@@ -1,0 +1,470 @@
+{
+ "nota": "Participações só se comparam dentro do mesmo volume. 'nome_nos_dados' é a grafia da planilha e da base; 'nome_exibicao' é a grafia dos PDFs.",
+ "marcas": [
+  {
+   "id": "v1-syngenta",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "Syngenta",
+   "nome_nos_dados": "Syngenta",
+   "aliases": [
+    "Syngenta"
+   ]
+  },
+  {
+   "id": "v1-bayer",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "Bayer",
+   "nome_nos_dados": "Bayer",
+   "aliases": [
+    "Bayer"
+   ]
+  },
+  {
+   "id": "v1-basf",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "BASF",
+   "nome_nos_dados": "BASF",
+   "aliases": [
+    "BASF"
+   ]
+  },
+  {
+   "id": "v1-ihara",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "IHARA",
+   "nome_nos_dados": "IHARA",
+   "aliases": [
+    "IHARA"
+   ]
+  },
+  {
+   "id": "v1-corteva",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "Corteva",
+   "nome_nos_dados": "Corteva",
+   "aliases": [
+    "Corteva"
+   ]
+  },
+  {
+   "id": "v1-upl",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "UPL",
+   "nome_nos_dados": "UPL",
+   "aliases": [
+    "UPL"
+   ]
+  },
+  {
+   "id": "v1-fmc",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "FMC",
+   "nome_nos_dados": "FMC",
+   "aliases": [
+    "FMC"
+   ]
+  },
+  {
+   "id": "v1-adama",
+   "volume": "1",
+   "segmento": "defensivos",
+   "nome_exibicao": "ADAMA",
+   "nome_nos_dados": "ADAMA",
+   "aliases": [
+    "ADAMA"
+   ]
+  },
+  {
+   "id": "v2-john-deere",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "John Deere",
+   "nome_nos_dados": "John Deere",
+   "aliases": [
+    "John Deere"
+   ]
+  },
+  {
+   "id": "v2-new-holland",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "New Holland",
+   "nome_nos_dados": "New Holland Agriculture",
+   "aliases": [
+    "New Holland",
+    "New Holland Agriculture"
+   ]
+  },
+  {
+   "id": "v2-stara",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Stara",
+   "nome_nos_dados": "Stara",
+   "aliases": [
+    "Stara"
+   ]
+  },
+  {
+   "id": "v2-massey-ferguson",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Massey Ferguson",
+   "nome_nos_dados": "Massey Ferguson",
+   "aliases": [
+    "Massey Ferguson"
+   ]
+  },
+  {
+   "id": "v2-valtra",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Valtra",
+   "nome_nos_dados": "Valtra",
+   "aliases": [
+    "Valtra"
+   ]
+  },
+  {
+   "id": "v2-case-ih",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Case IH",
+   "nome_nos_dados": "Case IH",
+   "aliases": [
+    "Case IH"
+   ]
+  },
+  {
+   "id": "v2-fendt",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Fendt",
+   "nome_nos_dados": "Fendt",
+   "aliases": [
+    "Fendt"
+   ]
+  },
+  {
+   "id": "v2-jacto",
+   "volume": "2",
+   "segmento": "maquinario",
+   "nome_exibicao": "Jacto",
+   "nome_nos_dados": "Jacto",
+   "aliases": [
+    "Jacto"
+   ]
+  },
+  {
+   "id": "v3-yara",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Yara",
+   "nome_nos_dados": "Yara Brasil",
+   "aliases": [
+    "Yara",
+    "Yara Brasil"
+   ]
+  },
+  {
+   "id": "v3-mosaic",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Mosaic",
+   "nome_nos_dados": "Mosaic Fertilizantes",
+   "aliases": [
+    "Mosaic",
+    "Mosaic Fertilizantes"
+   ]
+  },
+  {
+   "id": "v3-cibra",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Cibra",
+   "nome_nos_dados": "Cibra",
+   "aliases": [
+    "Cibra"
+   ]
+  },
+  {
+   "id": "v3-ubyfol",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Ubyfol",
+   "nome_nos_dados": "Ubyfol",
+   "aliases": [
+    "Ubyfol"
+   ]
+  },
+  {
+   "id": "v3-timac-agro",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Timac Agro",
+   "nome_nos_dados": "Timac Agro Brasil",
+   "aliases": [
+    "Timac Agro",
+    "Timac Agro Brasil"
+   ]
+  },
+  {
+   "id": "v3-stoller",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Stoller",
+   "nome_nos_dados": "Stoller do Brasil",
+   "aliases": [
+    "Stoller",
+    "Stoller do Brasil"
+   ]
+  },
+  {
+   "id": "v3-vittia",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Vittia",
+   "nome_nos_dados": "Vittia",
+   "aliases": [
+    "Vittia"
+   ]
+  },
+  {
+   "id": "v3-eurochem",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "EuroChem",
+   "nome_nos_dados": "EuroChem Brasil",
+   "aliases": [
+    "EuroChem",
+    "EuroChem Brasil"
+   ]
+  },
+  {
+   "id": "v3-fertipar",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "nome_exibicao": "Fertipar",
+   "nome_nos_dados": "Fertipar",
+   "aliases": [
+    "Fertipar"
+   ]
+  },
+  {
+   "id": "v4-corteva",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "Corteva",
+   "nome_nos_dados": "Corteva",
+   "aliases": [
+    "Corteva"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Brevant Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Cordius",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Pioneer",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-syngenta",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "Syngenta",
+   "nome_nos_dados": "Syngenta",
+   "aliases": [
+    "Syngenta"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Golden Harvest",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "NK Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Nidera Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Série Syn",
+     "descritiva_fora_da_nota": true
+    }
+   ]
+  },
+  {
+   "id": "v4-gdm",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "GDM",
+   "nome_nos_dados": "GDM",
+   "aliases": [
+    "GDM"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Biotrigo Genética",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Brasmax",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "DONMARIO Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Neogen",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Supra Sementes",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-tmg",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "TMG",
+   "nome_nos_dados": "TMG",
+   "aliases": [
+    "TMG"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "TMG",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-longping",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "Longping",
+   "nome_nos_dados": "Longping High-Tech",
+   "aliases": [
+    "Longping",
+    "Longping High-Tech"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Forseed Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Morgan Sementes",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-limagrain",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "Limagrain",
+   "nome_nos_dados": "Limagrain",
+   "aliases": [
+    "Limagrain"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Geneze Sementes",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "LG Sementes",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-bayer",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "Bayer",
+   "nome_nos_dados": "Bayer",
+   "aliases": [
+    "Bayer"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Agroeste",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Dekalb",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Deltapine",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Monsoy",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Sementes Agroceres",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  },
+  {
+   "id": "v4-basf",
+   "volume": "4",
+   "segmento": "sementes",
+   "nome_exibicao": "BASF",
+   "nome_nos_dados": "BASF",
+   "aliases": [
+    "BASF"
+   ],
+   "unidade": "grupo",
+   "submarcas": [
+    {
+     "nome": "Credenz",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "FiberMax",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "Lidero",
+     "descritiva_fora_da_nota": false
+    },
+    {
+     "nome": "SoyTech",
+     "descritiva_fora_da_nota": false
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,38 @@
+---
+import { url } from "../../lib/url.ts";
+import Base from "../../layouts/Base.astro";
+import Spark from "../../components/Spark.astro";
+import { elos, ranked, brandUrl } from "../../lib/data.ts";
+import { n } from "../../lib/format.ts";
+---
+<Base title="Marcas" section="marcas" description="As 33 marcas e grupos do estudo, por elo.">
+  <section class="page" style="padding-top:56px;padding-bottom:24px;">
+    <p class="kicker">33 marcas e grupos</p>
+    <h1 style="font-size:clamp(40px,6vw,76px);">Marcas, por elo</h1>
+    <p class="lead">A lista segue o painel de cada elo. Não há ranking único das 33: participações só se comparam dentro do mesmo elo.</p>
+  </section>
+  <section class="section">
+    <div class="page multiples two">
+      {elos.map((e) => {
+        const r = ranked(e);
+        const max = Math.max(...r.map((m) => m.total ?? 0));
+        return (
+          <div class="multiple">
+            <h4><a href={url(`/elos/${e.slug}/`)}>{e.nome}</a><span>participação</span></h4>
+            <table class="t">
+              <tbody>
+                {r.map((m, i) => (
+                  <tr>
+                    <td class="name"><a href={brandUrl(e, m)}>{m.nome}</a>{m.submarcas.length > 0 && <span class="muted small"> · {m.submarcas.length} submarcas</span>}</td>
+                    <td class="num" style="width:56px;">{m.total === null ? <span class="na">sem total</span> : n(m.total)}</td>
+                    <td style="width:100px;"><Spark value={m.total} max={max} reference={e.referencia} highlight={i === 0} /></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+</Base>

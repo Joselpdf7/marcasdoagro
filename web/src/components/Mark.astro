@@ -1,0 +1,10 @@
+---
+// Lens over a field: the study looks at how the agro shows up.
+interface Props { class?: string }
+const { class: cls = "mark" } = Astro.props;
+---
+<svg class={cls} viewBox="0 0 24 24" aria-hidden="true" fill="none">
+  <circle cx="12" cy="12" r="10.4" stroke="currentColor" stroke-width="1.6" />
+  <path d="M2.4 14.6h19.2" stroke="currentColor" stroke-width="1.6" />
+  <circle cx="12" cy="10.2" r="3.1" fill="currentColor" />
+</svg>

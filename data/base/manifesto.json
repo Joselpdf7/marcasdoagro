@@ -1,0 +1,1209 @@
+{
+ "gerado_em": "2026-10-06T16:01:36.249971+00:00",
+ "modelo_embeddings": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+ "dimensao_embeddings": 384,
+ "n_documentos": 162,
+ "n_chunks": 6987,
+ "por_volume": {
+  "1": 669,
+  "2": 1462,
+  "3": 1666,
+  "4": 3190
+ },
+ "bases_de_origem": [
+  "estudo_1_panorama_digital/entregaveis/base_rag_v1",
+  "estudo_2_maquinarios/entregaveis/base_rag_v1",
+  "estudo_3_fertilizantes/entregaveis/base_rag_v2",
+  "estudo_4_sementes/entregaveis/base_rag_v1"
+ ],
+ "documentos": [
+  {
+   "arquivo": "vol1_defensivos__auditoria_autoatendimento_8_sites.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "9a0f5262d62e123308002f9cf9fd219db2f649b8ed8ee24685977496401011d6",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__busca_pela_marca_universo_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "2af8378420fd6c66917ddc846a51f38055f775f4b1dcaf38a79da163e8169f03",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__busca_por_produto_v1_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "1840623f180bd6ad643437af316440e60f24d88fe7d183e053d5f16f37cc6750",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__cestas_congeladas_v1_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "743fe86bdf91b99c5e7bb2381ae3552b5d689434fbe1c4e5644715beffa33628",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__cestas_v1.1_emenda_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "179549bb904b48a56d6af4a9861a1029be50ff9ca706a67eb69449ae3f111d54",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__codebook_para_revisores.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "b196ccc529cd0fb11dc545ec0f97322d95aa2d1fb596245ab204d6e9d4aaa0a6",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__engajamento_12m_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "ce13879827caac8fc800b6f28209f7d27654d76376a0233ec5ebc2904d437c6f",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__engajamento_por_marca_rede.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "4d809bb9b234c61311885cf2da5ad6717cc79f680a8b23c40a12bd2ad010bc80",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__experiencia_desempenho_v6_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "814200b7d641266ec68135e98a7f6ffeff6cd02efdd1f107154af9a8e236d17f",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__ia_consolidado_4_superficies_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "0a3c1fe4e4f35138be1aa0ff2fcaaa7e99d1a8aec4a96dccb00408ce696bb3b1",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__imprensa_classificada_auto_v2.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "551f7fc76f33b11a62baf89479a3db8ea5cdb0f8becf45fad45a2a76add02d96",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__imprensa_earned_v2.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "db607e00800ec01db7e985e401c24746322cd24ad040aef6c00b1be67ae97d98",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__leitura_ia_pilar_v2.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "f82b1ea95af527608703f7ffdd52bf012fd90d594b90caf9c0b29ab5fa945d44",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__painel_consolidado_v1.4.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "919ddb4970558032208e051a231c2a6b0fdb755e422d118a53380389e2847bc2",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__perguntas_ia_serp_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "734ed8f852351f7c9bb136f1fbf1f1841cd4922079712f0ff50e1199ad6e2d0a",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__presenca_busca_categoria_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "bc9ff4c09f020899b6c959e33c3dae4355e4e6281a75e156d61d02e378ecfc07",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__presenca_categoria_por_marca.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "457cd601dc974f6e25afb41fe3018c34feccc57d7b6302f4ba60d4fddcebb75b",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__protocolo_p1_defensivos_v1.1_emenda_arquitetura_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "d1e58da514d10a717585f70a7c7a660faef5df2264551a18c57247c26a4a8356",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__protocolo_p1_defensivos_v1_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "0391aa24f56550b530bd40d089c67384eca3d761a07e772e5fd68e5b21fcad7d",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__regras_adjudicacao.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "e5d554ee6f87b6164783ed26bb633b842f21b16fcce171719e98d19bfe43df21",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__resposta_da_marca_f5_v2_8marcas.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "f6e3969bb76c3d6c7a9ba0b76a6e45fe469596e09e4460d39020960a76fac11e",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__resposta_marca_por_marca_v4_8marcas.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "28d6c7b4170f365f9660f243b142cb653fbe43f25f616c5237615a6c6df5e256",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__sensibilidades_fase4.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "faf5d838914c4c3c91b1e06b83c8247c3bf5b5e05781c7ca8b806b2cd5c5b4f8",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__snapshot_seguidores_8_marcas.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "70be3b98639495d1e41d0db74eb28e208c4b5f7c7f2a4c44a1dfaf683b6679bb",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__snapshot_seguidores_8_marcas_v1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "5a6ad00a051d454111a6f8dcf7f4d7dcd4be3dc23408fe23c9dff97c05deaad5",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__submetricas_8_marcas_v0.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "f79225c6a28cdda9d4499006ea5ad94459da7b6796275daf26ab75eaab8b69b0",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__universo_de_marcas_v1_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "4b29a5ac03825c78e7cec96d5f820a249f478fb2bff3a8410dda543e0548d64d",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__validacao_dominios_candidatas_2026-09-13.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "3f46a06175d0799328e7a6a381cbbf65ec84c832bb008393a32944a187cf0240",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol1_defensivos__volumes_por_produto_v1_1.md",
+   "volume": "1",
+   "segmento": "defensivos",
+   "sha256": "5a086944a50925c751feba9fe4cb676a1a701c790670a4303922005647d5564b",
+   "origem_base": "estudo_1_panorama_digital/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__autoatendimento_v5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "d12af625b931402ca40f83d9b2c44f9609226e51019d745a2912c5c3038012f4",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__busca_pela_marca_p1.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "fbccb6c6afbc8c74a289b451f33e43dda12a6fad69fb8765e4add68e18cf710f",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__busca_por_modelo_v1.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "e360e140dd408fe62c73ca7237187584c3878040d38a09723affc7d388297eb8",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__cestas_maquinarios_v1_2026-09-14.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "1e998a49e4cb847254ab63608b6d0bfc3dbdc7f9ba8704ef229db208e60d704a",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__checklist_v5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "9163e76052888b154438775c59e4b578df988bdfed59d5b19a9e884b135d4532",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__codebook_para_revisores.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "ccc2cdbad4d8e880cf324f7275da93114c1191b8e5c0233c1d2b345eae1b2ad2",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__dados_whitepaper.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "db669602862c06e77b97cfb2175fcd351aeba85a90ddba636c85ffea79c0af4c",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__desempenho_v6.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "380545e74fae5062a573ab7e095da6866f04e8a85ce6f795cf37888270ef5aba",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__engajamento_12m_f1_f4_v3.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "cafe045dfb65124b4ffbe4399712804283007a9e7d89489d6c643a4ef1747dfc",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__escopo_organico_e_autoridade_p2_p3.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "34c4f991497449d33c56f047a727fef002033290d473002b2800caf2e0219c60",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__fontes_proprias_v7.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "e3528094b7ebdd7000675f5bd5767852ec0be5061345181b182c9381344886f8",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__ia_por_marca.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "e6c3fb99548067e90a14d56130e85802485ed095a2213a555cbdef9408983824",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__ia_superficies_p7_v7.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "8823fdd74cd4f678f2779d00c9fe08356e29ad2f8ff71aca1d322ab4272dda5e",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__imprensa_classificada_auto_v2_1.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "36c933edafa3e8dc4546644bb36d23645db99cf28f58cad1615bbfa58d34db91",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__imprensa_earned_p6.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "5aba7c700f8c357191f02f10384837d0802c6b22a5d60f1e16a247aa49e08866",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__kappa_2026-09-16.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "c58ac0a319328df871f9a99b04be302eb5a166fcf915bd4065341aa266607d07",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__painel_consolidado_v5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "537075205ced5919accdeec8a4f74905c5d260c1da7f7c95cccef52250d13a57",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__painel_v0_resumo.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "0e3a736018276aba191b192c4976409c0b9e52c572300d4c884e8a2ac2322567",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__perguntas_ia_maquinarios_v1.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "86aff93f7b6c61319e046c3b28cc48e80a1ee0de9a13c1666449511a4c927c2b",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__portais_de_conteudo_maquinarios_2026-09-14.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "a5a490320d93d2d16f416f844ff1ae22707cab74df50e00820d7b29dac221936",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__presenca_busca_categoria_p4.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "af2a2c5a1022fb588c527557a15e7feb80d569e68454f90fdb196b7c4b1dfcbe",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__presenca_categoria_por_marca.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "6a34416b6504bfdcdc6dcd2bd5205c1bb3cd9f5dfebb946f966d10b659dc5866",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__protocolo_maquinarios_v1_2026-09-14.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "3e706da4732feed5cc336b0638039e88dec7569a5bb383dea65a2146bebc14ef",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__regras_adjudicacao.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "2473a505274a647bcf7265a08bc25319da922a211224309dbe43fb89c308e8ef",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__resposta_da_marca_f5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "2e95f3e2d1c5f3820648bab8c93a58a216dfc140d9cca6a44d05a887420d3603",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__resposta_marca_por_marca_v4_8marcas.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "3fee0bd3dca8f4ad976e5326bb3187714310e0e72243e876f315fc0756cee40b",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__resultado_revisao_ia.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "ca678e11b2c5f1fca5a031e608a623259812d53131a814d9e1fe178795d8c07c",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__resultado_revisao_imprensa.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "d2b59da2b0a41e7758232740c5db8ff662a2ece287173cfcc16df732bddf1e98",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__sensibilidades_fase4.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "0022aa7f5c9e50bee7b9db450a47188881f4f1c53fef599f9ecb80237ac60519",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__sensibilidades_fase4_v5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "3e9573aa594fc1224eb03fe6eec7a5c21bb11601dc71158c96582aea6907bb94",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__snapshot_seguidores_8marcas.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "b33759e45c47037721c46356a20230e6d8133ef04abb22d7199e05ac643d02ab",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__snapshot_seguidores_p5.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "02a07c0b8ccde5e44a07f60939b246ef8018c7c68e5cc9a4c276edd15e819e10",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__social_por_marca_rede.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "e6ca54e21219c945cb27ccaa685700bd1da41d444e456ec8b27c6e8717d86092",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__submetricas_8_marcas_v0.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "0abf914e8c9d1207a55896f877214510a63012a528b431306417a1c80719ba45",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__validacao_dominios_maquinarios_2026-09-14.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "f55bdba114aa34ffca79af3d994dd274864644e3c3a699766e8146eb51f24c13",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol2_maquinario__volume_modelos_por_marca.md",
+   "volume": "2",
+   "segmento": "maquinario",
+   "sha256": "395e69ed0d15a3b353bd55138209a7e6ef16db9d74f6360b113aba862334dab9",
+   "origem_base": "estudo_2_maquinarios/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__autoatendimento_v5.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "f2f9647cb816017daf3a006f5494ca999d8493a387932061d7615cf6a154723b",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__busca_pela_marca_p1.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "1d15ef63da083d9af028856ef45edd2d7195a78292c7b3d6bb3ab38b2852df46",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__busca_por_produto_v1.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "933af7bb5311d927b083684c4ffc0b8a04a25c2a48ddf512d6e31bb75d8ceea9",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__cestas_fertilizantes_v1_2026-09-18.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "59b7187a3f98a99ebc986757c7f4a8cf250b9fb7198027e6382e35e4ce330bb3",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__checklist_v5.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "c7ca29f8e3de68e6dba1d3dc890852865037212f5c4c0eb36cbc1b372521c57f",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__codebook_para_revisores.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "0ffcab8826c964b5ff8b7337851a7f62f02f0952059779667c385ae9418deec7",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__criterios_universo_fertilizantes_v1_2026-09-18.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "c60b204bf57bfcfefe421a0b474de9fe3388225e883e3d926f7a60f755696b62",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__dados_whitepaper.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "03914cf303b244b942a8dd636eae702a5664510fdb8511cb20c0379b7f57ed93",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__desempenho_v6.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "f78281a0e14f867352aaef17f7502cea5407600c0c12c68138c72ca2a4324db1",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__engajamento_12m_f1_f4_v3.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "4e5db6d0b9df64c3b7af64fb4aa96973145d9fe4346ae23b854bbf19863ab7b8",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__escopo_organico_e_autoridade_p2_p3.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "71b80a61dd4585e0f4ea7481062207b7d688881b13ec46b0b09f9a4ce2cf6774",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__ia_por_marca.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "fc746cf3571c712cbc42c73aef7e465b1bbee1771154f2bd8446f37212065dbb",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__ia_superficies_p7_v7.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "e2f8886fd5125395d95dd0ff9b61e339e033a7e5254e176744d45961a458a1db",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__imprensa_classificada_auto_v2_1.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "79ba4fc8b9ed934f3a2ac6ef30614c6a4657cb250a8c941be5cdd87ec72d9dbc",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__imprensa_earned_p6.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "e4b3af337147c22a3aa428d40667f0e0c1f9b474166230ebd32ea65fa2f35fc4",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__kappa_revisao_humana.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "9c8022f1f3f036a2f9c9b6280df52ba0a3eef8a4ed36a6ab12e7c77398c9e739",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__kappa_revisao_imprensa2.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "4fdabe9445ce7c6b2e9caddb5c54cbf5f1e7f9c21a750889336e239e658fe454",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__pagespeed_crux_por_marca.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "be8c5b56c21f7e0abd32e6f270823f8c1d2359b35b2835133c6fbead1c8ebe3f",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__painel_consolidado_v2.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "861afe2103ce89c211943321a3ca9924ef1a38c6e07aa5b4bff80fa3342047d3",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__painel_resumo.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "bf1dfce1ba5b3fb39392cec84e99ce7efd387a86a7b3d8d8ed65790d2eba3b5c",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__perguntas_ia_fertilizantes_v1.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "5855926bcd6c15347effdf4076e456c4559526ab9460538649cfd97645cb24a4",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__portais_de_conteudo_fertilizantes_2026-09-18.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "f7c495f892e96980801660695319ec44571242116a37e279872a96072058fd78",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__presenca_busca_categoria_p4.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "a47a6fe1e0d226ccdc8dc82a82e7bb9148e8f930f0c11d19f77e0ee6f5822ac5",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__presenca_categoria_por_marca.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "01db2381cb33af088851389d8ed15106bde4e3b8583ee5461cad60d34c941303",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__protocolo_fertilizantes_v1_2026-09-18.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "49d5c3ae5c4290e54a6f159cfd0e28a626df28c152f46fdc6dc02ca0c8b7efdb",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__regras_adjudicacao.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "aa6ee329d046c0f532f5d80fb98ebe994b09db862cd9bcec7570f112bf69085a",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__resposta_da_marca_f5.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "8b5acae81d8c9cb31f257aafa55c457fb6af39a24cca8a380b9ec12899a9a51b",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__resposta_marca_por_marca_v4_8marcas.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "5158547b7e9585ebc9e5d086ac7c21a1aa307436986a22a8ce035ac5af965bd4",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__sensibilidades_fase4.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "85373d25d6b500e087b7d6a7c0e651e72b46cfbc4ed79250699c5b8f73cc57fb",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__sensibilidades_fase4_v2.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "a73f079ee7bc81349e8cfad5717428366a024a3a8afc9d6d3d3f1e8dfedf9b98",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__snapshot_seguidores_9marcas.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "3c80843654f10a02d5bfa145874db29a999bd0fe5ddce389a961b71c47000310",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__snapshot_seguidores_p5.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "d62b788b984a650f8ec565fee98fcc085da9d6ad0a70e952985861b8ed4a13cd",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__social_por_marca_rede.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "966a17e3ecc4843458eec0f2d8b5d0fec17efdc4f8b3fe1a411a3eb3910a3a24",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__submetricas_9_marcas.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "ea06d6cf1f0c95e4cc12abd16019bd07a38e31511a655a5e3c7509d7c5a80a6e",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__v1_por_marca.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "b8fd924b2ec5bb1fa3bc4c1d49f3322b69d2de1a9db2c50c71343202bf32f690",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__v5_itens_long.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "263cc38dd1127873fbd98cc2c6c808d9673ab38c0aa6a3eb419c8cc476c8b7c8",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__v7_por_marca.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "7e61f7be8b602ecf5358d2cf93f8e5bce88162dc544bc5d3148fef336b107ea8",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol3_fertilizantes__validacao_dominios_fertilizantes_2026-09-18.md",
+   "volume": "3",
+   "segmento": "fertilizantes",
+   "sha256": "e596fd96895c9ce2a0bfaa137827ca71ff50aa7ec3a035045c3553f893945ab4",
+   "origem_base": "estudo_3_fertilizantes/entregaveis/base_rag_v2"
+  },
+  {
+   "arquivo": "vol4_sementes__autoatendimento_v5.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "6f34ad9e17d1118a29b420bc10aa842993a9d48a6d73f4b172a4f7e5a47249c4",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__busca_pela_marca_p1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "89f4e16500f3281249cb5cac5b8feaf1e7af1d803e60b6535332e53a12c43b37",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__busca_por_cultivar_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "429c7bee7e75c96a474f256ea465590abe7eeeb12f8b202cd212aeb460c2892d",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__cesta_categoria_sementes_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "6c08f0eb8d4f8dac100e3ed8c7a617020e6a3daa6b2cbc01c25840ab220d7815",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__cestas_sementes_v1_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "60c610505671f33b66fcd4cd8dd4408a1314872bcf7bb125b899c3072f40a250",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__checklist_v5.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "7803e992a871e5e5f13ea4daa82bd1fb70aedc9fd382c5f26fa3a8cfeda8be45",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__codebook_para_revisores.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "d3bb25138267698ad8007889444ee62a5f5c6e365b4be9fb19ef8c0f7a6bc4e2",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__concordancia_revisores.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "0abee0fef86137fee0dd2e24846b0624948dc12b0f75375c31aa85c3b4c278f0",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__criterios_universo_sementes_v1_2026-09-29.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "30763e3ea2e92f4cdce4f93b937d8f1024f994d218723ecd4d0bb0293cbfc135",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__dados_whitepaper.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "36624ff45e49de78447fb7db570c241c8553d35df31107642b0f99bade3c0887",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__desempenho_pagina_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "627cb0930d2ecc5f221b421d54a8b65d829f182c0c125297b3097b7aa681e62a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__desempenho_v6.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "351f697fb3978a3dcc5bd83ba52eb5f2553578ca214595b8530dea2f5b178f3e",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__diretorio_grupos_sementes_2026-09-29.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "dd19f2f343526cc124721b8c2cfa743651a0a28553e640f9f9919f653b11343c",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__emenda_1_dicionario_sementes_2026-10-02.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "507aab665837617b03fbe89553decbdead07a8676441b9886e9330687891908a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__engajamento_12m_f1_f4_v3.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "a56e5243621042170dfff7d00ee2837afc14782742469b5008f7005ca7298998",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__escopo_organico_e_autoridade_p2_p3.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "9018d4c7835672006d48ea82e733510a64be7025b614fede29d3dd364d5768df",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__ia_p7_v7.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "423592264334c9b3fc158b808720b8f907a31d935ac38d944d85284f9a8267c8",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__ia_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "0bf2f5c04e7b7f984ab5a21d57437e5066381da12cd3a136ae3971d695e8db5d",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__ia_por_submarca.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "a9ac8ea7785c20f4a59c812e97f2462afa8d0fa89ca59aed02cf39d17c6bb1cd",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__imprensa_earned_p6.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "2b21d1425aa9bf3f40bb40f80c323419f9d259adbc973ff8f27f1f83054abd49",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__imprensa_resumo_auto_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "97c6d10bf335a1fcaf7d72f3aa23c52ab6b16bf708e98798841eb6298b0b7eb2",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__imprensa_resumo_auto_por_linha.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "931776e7d1559679f42bc20008a1f096dba189ce522245d726a8bf18d1fb2225",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__kappa_revisao_humana.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "cae646f0654af73d92feadfaeae92aad90578a8db5e1ed3577953210caa523ab",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__kappa_v7.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "38eceab0357266e7e35b67c510902529d30814d8047baacc227403c1183422fe",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__p1_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "ae171b46ab289b255e2f4ea95d7c72bbedb41286f6d2ea4fd82bfbe0c6bf1d11",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__p1_por_linha.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "d330baef1d50ffc7ba57bd804254f293279432d2e4befdb827e5faae9a4c5585",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__p3_por_alvo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "73ae7677b4c94067d716a8d7c863e1875c07880b9c3cd34c93129fefa68ed75a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__p3_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "fedb78fdd53aff25c5d905deaa80cf7f1909ae7032e1386f400bdeb470c0cb49",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__painel_consolidado_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "69bc0bc8be1bd819826e742c23e0e23024d754c8e56ddfb9e46d7f8817c48441",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__painel_resumo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "ce8f09fe8aff699d2c0ca2ba910cfc7f58bb6c3f2e5202c38c6083670b45fb2a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__painel_submarcas.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "0b4fdd4c1037c6afba76f229c6f992b7294b2306b742e2e589c0804a69ae6c8d",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__painel_submarcas_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "905e09db10a7d25237514398e1882447ac238179976977ac5a78e81a99d9a5cb",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__passada_navegador_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "048d1bf898a51f21bfe3259bbb7e729ee15f75aab9979fa1c1208eb52685bce1",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__perguntas_ia_sementes_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "afd34e685a225c12c7a43720847628dc30e7a8cfd7e459f4ca130f12e0562450",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__portais_de_conteudo_sementes_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "c0ec9e1113930ec60a94d0b214b59be585212189c6241c9b2053703e7aa4ba4a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__presenca_busca_categoria_p4.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "0b7ffa549c2cc671ec6ced786ad212443b8e9532864284ece59699f998578d1f",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__presenca_categoria_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "0463b528c0a466675e4fd4b22fd41469497805e9cb7a841b045afcdb92600b48",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__presenca_categoria_por_submarca.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "e81bfd75a1801e92f8022797493ab59f094f3c2876681b92e168dae3db8a841e",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__protocolo_sementes_v1_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "2eb35ffe5af34591d443b4b46bade8477de86460409d6d7a9c6eb1f9fc5be17e",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__regra_de_soma_por_grupo_v1_congelada_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "fca09dd1e01e162742c9f851e6286e4e8cfc52b9711fdd820c9489a84f0ebce4",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__regras_adjudicacao.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "29c417de2849433eec0584503876bac2e8387951e58363749fc00ad4262df64a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__resposta_da_marca_f5.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "3cf472b8f4dc1030f536aea72170bd26d9d4e9fc4e10b7dfbe22ffae6b5f549c",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__resposta_marca_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "aa95a45f14f1430c459ff7aa686cb093d2daa541a2bd16754d44a84be8efe829",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__resposta_marca_por_linha.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "26c89b22f1b686ae870e84f59bda11955d998f69487868640155247ef54ea757",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__sensibilidades_fase4.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "190c8f248aa78b8e40d34347db28e6c51385c5a0b5661d3b7067f136fd071191",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__sensibilidades_fase4_v1.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "be2e20017623d222aebff710ff89acbd3fa4d5fd59e534fc23d2f8aaefe624e5",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__snapshot_seguidores_p5.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "d5b2fa8659f08b2cf9043338603c06f52f72874ee01a2ded0934a9f758aa4b3d",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__snapshot_seguidores_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "f537d3e36370258a10979a6884900d81fd32b7063748a58059d20b55b31100a1",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__snapshot_seguidores_por_linha.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "1c0dd39dc2cf4ea3c7cefd55ec616c70f1d9e34637d58fc53518dda2f3f6c8b1",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__social_por_grupo_rede.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "6d6a58e80879403754cd542181a3c7704ba881cee0e5c9c4ac5cc9b113b27916",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__social_por_linha_rede.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "812813abaa812562d21a969c8a3ea70f66c8d53facdef04f127bb1bdd2cac2e4",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__submetricas_25_submarcas.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "28f9e7c34e4416a7a48745a28b565baa13a5a19e5f864285ebfd76b635e5e815",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__submetricas_8_grupos.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "f03d2f2569687f7e62589f428518da3ad20abbc13de80694a043a95e9224467b",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__v1_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "1fa815248938e118cbcb6e72a929aa97653f3d79810059bb32c923771d39ab3d",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__v1_por_submarca.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "83583c9949d2fe40f811fe0b52fdfaf9143273c18dea70632364d2d2bd459a24",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__v5_itens_long.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "84f3eec0bef72769131657fabf6a7289a4ceec8ec11535fb3c8f1e10480f51d0",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__v5_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "4aec79d9ac270a63de666aae5121c11fe352bf8b5bbadbc2dc2d146b04056724",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__v7_por_grupo.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "b0f2eabb0da02040f96893d27d342da0c4fa10d252944adc98c7d415b8eaba39",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  },
+  {
+   "arquivo": "vol4_sementes__validacao_dominios_sementes_2026-09-30.md",
+   "volume": "4",
+   "segmento": "sementes",
+   "sha256": "db50ab09df9b7943f47f636c3bf2c7be7c22f8ae7d937934c3a4e178aa7c6b8a",
+   "origem_base": "estudo_4_sementes/entregaveis/base_rag_v1"
+  }
+ ],
+ "limpeza": {
+  "data": "2026-10-06",
+  "documentos_removidos": [
+   {
+    "arquivo": "vol1_defensivos__painel_consolidado_v1.2.md",
+    "motivo": "versão superada pelo painel v1.4"
+   },
+   {
+    "arquivo": "vol1_defensivos__painel_consolidado_v1.3.md",
+    "motivo": "versão superada pelo painel v1.4 (cenário publicado nas sensibilidades)"
+   },
+   {
+    "arquivo": "vol2_maquinario__painel_consolidado_v4.md",
+    "motivo": "versão superada pelo painel v5"
+   },
+   {
+    "arquivo": "vol2_maquinario__sensibilidades_fase4_v4.md",
+    "motivo": "versão superada pelas sensibilidades v5"
+   },
+   {
+    "arquivo": "vol1_defensivos__resultados_bloco_a_semrush_v1.md",
+    "motivo": "resultado preliminar, superado pelo painel e pelas submétricas finais"
+   },
+   {
+    "arquivo": "vol2_maquinario__conformidade_vol2_maquinario.md",
+    "motivo": "controle interno de processo, sem evidência do estudo"
+   },
+   {
+    "arquivo": "vol3_fertilizantes__conformidade_vol3_fertilizantes.md",
+    "motivo": "controle interno de processo, sem evidência do estudo"
+   },
+   {
+    "arquivo": "vol4_sementes__conformidade_vol4_sementes.md",
+    "motivo": "controle interno de processo, sem evidência do estudo"
+   }
+  ],
+  "documentos_renomeados": [
+   {
+    "de": "vol4_sementes__passada_navegador_sessao_2026-09-30.md",
+    "para": "vol4_sementes__passada_navegador_2026-09-30.md"
+   }
+  ],
+  "criterio": "sem autoria, pessoas, livro ou matriz proprietária, ferramentas, fornecedores, custos, orçamento e rótulos internos; o caráter automatizado do método fica explícito em termos genéricos"
+ },
+ "arquivos": {
+  "chunks.jsonl": "f2a71ff920c5c0cbe12a95e072e734d1cf8cf7af6be9436c5a8932e7e90b42c0",
+  "embeddings.npy": "3bcf46a8e5f92e110b03aee81a83c40f6fecdfcefefbb40139dc06130264c71b",
+  "marcas.json": "cd306be31b9d38f5b462f825767d68ce8277d8eb75fa94a93279c3a40003d400"
+ },
+ "embeddings": {
+  "texto_vetorizado": "campo texto de cada trecho, sem normalização",
+  "ordem": "mesma de chunks.jsonl",
+  "recalculados_na_limpeza": 333
+ }
+}

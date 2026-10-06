@@ -1,0 +1,45 @@
+---
+import { url } from "../../lib/url.ts";
+import Base from "../../layouts/Base.astro";
+import { serie, eloBySegmento } from "../../lib/data.ts";
+import { renderDoc } from "../../lib/docs.ts";
+
+export function getStaticPaths() {
+  return serie.documentos.map((d) => ({ params: { slug: d.slug } }));
+}
+const d = serie.documentos.find((x) => x.slug === Astro.params.slug)!;
+const e = eloBySegmento(d.segmento);
+const html = renderDoc(d.arquivo);
+---
+<Base title={d.titulo} section="documentos" description={`Documento de evidência do estudo, volume ${d.volume}: ${d.titulo}.`}>
+  <article class="page" style="padding-top:56px;padding-bottom:96px;">
+    <p class="breadcrumb"><a href={url("/documentos/")}>Base de evidências</a> / Volume {d.volume}{e && ` · ${e.nome}`}</p>
+    <p class="kicker">{d.tipo} · versão {d.versao} · {d.data.split("-").reverse().join("/")}</p>
+    <h1 style="font-size:clamp(30px,4vw,48px);max-width:30ch;">{d.titulo}</h1>
+    <dl class="docmeta">
+      <div><dt>Arquivo</dt><dd><code>{d.arquivo}</code></dd></div>
+      <div><dt>SHA-256</dt><dd><code class="hash">{d.sha256}</code></dd></div>
+    </dl>
+    <div class="doc" set:html={html} />
+  </article>
+</Base>
+<style>
+  .docmeta { margin: 24px 0 40px; display: grid; gap: 6px; font-size: 13px; color: var(--ink-3); }
+  .docmeta div { display: flex; gap: 12px; flex-wrap: wrap; }
+  .docmeta dt { width: 72px; }
+  .docmeta dd { margin: 0; min-width: 0; }
+  code { font-family: var(--mono); font-size: 12.5px; }
+  .hash { word-break: break-all; }
+  .doc { max-width: 900px; font-size: 15.5px; }
+  .doc :global(h1), .doc :global(h2), .doc :global(h3), .doc :global(h4) { margin: 1.8em 0 0.6em; position: relative; scroll-margin-top: 90px; }
+  .doc :global(h1) { font-size: 28px; }
+  .doc :global(h2) { font-size: 24px; }
+  .doc :global(h3) { font-size: 19px; }
+  .doc :global(h4) { font-size: 16px; font-family: var(--sans); font-weight: 600; }
+  .doc :global(.h-anchor) { position: absolute; left: -1.1em; color: var(--ink-3); text-decoration: none; opacity: 0; }
+  .doc :global(h1:hover .h-anchor), .doc :global(h2:hover .h-anchor), .doc :global(h3:hover .h-anchor) { opacity: 1; }
+  .doc :global(:target) { background: var(--brand-soft); }
+  .doc :global(table) { font-size: 12.5px; }
+  .doc :global(td), .doc :global(th) { max-width: 360px; overflow-wrap: anywhere; }
+  .doc :global(p), .doc :global(li) { color: var(--ink-2); }
+</style>

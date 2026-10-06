@@ -1,0 +1,276 @@
+---
+import Base from "../layouts/Base.astro";
+import { elos } from "../lib/data.ts";
+
+const sugestoes = [
+  "Quem lidera cada elo e com que margem?",
+  "Quais marcas respondem mais aos comentários no Instagram?",
+  "Como os assistentes de IA citam as marcas de fertilizantes?",
+  "Por que Bayer e BASF ficam sem total nas sementes?",
+  "O que a Stara faz diferente em Fidelidade?",
+  "Quais marcas aparecem na busca de categoria sem marca?",
+];
+const apiUrl = import.meta.env.PUBLIC_API_URL ?? "";
+---
+<Base title="Pergunte ao estudo" section="pergunte" description="Faça perguntas ao estudo. As respostas citam volume, documento e seção.">
+  <section class="page ask-page">
+    <div class="ask-head">
+      <p class="kicker">Pergunte ao estudo</p>
+      <h1 style="font-size:clamp(36px,5vw,64px);">Uma pergunta, <em>a resposta com a fonte.</em></h1>
+      <p class="lead">O assistente responde só com a base de evidências do estudo e cita volume, documento e seção. Se o estudo não traz o dado, ele diz.</p>
+    </div>
+
+    <div class="ask-filter" role="group" aria-label="Restringir a um elo">
+      <span class="muted small">Buscar em</span>
+      <button class="chip" type="button" data-elo="" aria-pressed="true">Todos os elos</button>
+      {elos.map((e) => <button class="chip" type="button" data-elo={e.segmento} aria-pressed="false">{e.nome}</button>)}
+    </div>
+
+    <div id="thread" class="thread" aria-live="polite"></div>
+
+    <div class="sugs" id="sugs">
+      {sugestoes.map((s) => <button class="chip sug" type="button">{s}</button>)}
+    </div>
+
+    <form id="ask" class="ask-form" data-api={apiUrl}>
+      <label for="q" class="sr-only">Sua pergunta</label>
+      <textarea id="q" name="q" rows="2" maxlength="600" placeholder="Ex.: qual marca de máquinas é mais citada pelos assistentes de IA?" required></textarea>
+      <div class="ask-actions">
+        <span class="muted small" id="count">0/600</span>
+        <button class="btn primary" type="submit" id="send">Perguntar</button>
+      </div>
+    </form>
+    <p class="fig-caption">Respostas geradas por inteligência artificial a partir da base do estudo. Confira as fontes citadas. Não envie dados pessoais.</p>
+  </section>
+</Base>
+
+<style>
+  .ask-page { padding-top: 56px; padding-bottom: 96px; max-width: 920px; }
+  .ask-filter { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 36px 0 8px; }
+  .thread { display: grid; gap: 28px; margin-top: 28px; }
+  .sugs { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
+  .sugs[hidden] { display: none; }
+  .thread > :global(div) { scroll-margin-top: 96px; }
+  .ask-form { position: sticky; bottom: 16px; background: var(--paper); border: 1px solid var(--rule-strong); border-radius: 14px; padding: 12px 12px 10px 16px; box-shadow: 0 10px 30px rgba(0,0,0,.06); }
+  .ask-form textarea { width: 100%; border: 0; resize: none; background: transparent; color: var(--ink); font: 400 17px/1.5 var(--sans); outline: none; }
+  .ask-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .ask-actions .btn { padding: 11px 18px; }
+  .ask-actions .btn[disabled] { opacity: .5; cursor: wait; }
+  :global(.msg-q) { font: 400 22px/1.35 var(--serif); color: var(--ink); border-left: 2px solid var(--brand); padding-left: 16px; }
+  :global(.msg-a) { font-size: 16.5px; color: var(--ink); }
+  :global(.msg-a p) { margin: 0 0 .9em; }
+  :global(.msg-a ul), :global(.msg-a ol) { margin: 0 0 .9em; padding-left: 1.2em; }
+  :global(.msg-a li) { margin: .25em 0; }
+  :global(.cite) { font: 600 11px/1 var(--sans); vertical-align: super; margin: 0 1px; color: var(--brand-ink); text-decoration: none; }
+  :global(.cite:hover) { text-decoration: underline; }
+  :global(.sources) { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule); font-size: 13px; color: var(--ink-3); }
+  :global(.sources ol) { margin: 6px 0 0; padding-left: 1.4em; display: grid; gap: 4px; }
+  :global(.sources a) { color: var(--ink-2); }
+  :global(.typing) { display: inline-block; width: 8px; height: 16px; background: var(--brand-ink); vertical-align: text-bottom; animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  :global(.msg-err) { color: var(--ink); background: var(--paper-2); border-left: 2px solid #d03b3b; padding: 10px 14px; font-size: 14.5px; }
+</style>
+
+<script>
+  import { anchor } from "../lib/anchor.ts";
+
+  type Fonte = { n: number; volume: string; elo: string; documento: string; titulo: string; secao: string };
+  type Turn = { papel: "usuario" | "assistente"; texto: string };
+
+  const form = document.getElementById("ask") as HTMLFormElement;
+  const q = document.getElementById("q") as HTMLTextAreaElement;
+  const send = document.getElementById("send") as HTMLButtonElement;
+  const thread = document.getElementById("thread") as HTMLDivElement;
+  const sugs = document.getElementById("sugs") as HTMLDivElement;
+  const count = document.getElementById("count") as HTMLSpanElement;
+  const api = (form.dataset["api"] ?? "").replace(/\/$/, "");
+  const history: Turn[] = [];
+  let elo = "";
+
+  // Composite sections ("GDM / distribuição") anchor on their first heading.
+  const docHref = (f: Fonte) => `${import.meta.env.BASE_URL.replace(/\/$/, "")}/documentos/${f.documento.replace(/\.md$/, "")}/#${anchor(f.secao.split(" / ")[0] ?? f.secao)}`;
+
+  /** Minimal, safe markdown: paragraphs, bullet/numbered lists, **bold**, [n] citations. Text only via textContent. */
+  function renderAnswer(target: HTMLElement, text: string, fontes: Fonte[]) {
+    target.replaceChildren();
+    const blocks = text.split(/\n{2,}/);
+    for (const block of blocks) {
+      const lines = block.split("\n").filter((l) => l.trim());
+      if (!lines.length) continue;
+      const isUl = lines.every((l) => /^\s*[-*•]\s+/.test(l));
+      const isOl = lines.every((l) => /^\s*\d+[.)]\s+/.test(l));
+      if (isUl || isOl) {
+        const list = document.createElement(isUl ? "ul" : "ol");
+        for (const l of lines) {
+          const li = document.createElement("li");
+          inline(li, l.replace(/^\s*([-*•]|\d+[.)])\s+/, ""), fontes);
+          list.appendChild(li);
+        }
+        target.appendChild(list);
+      } else {
+        const p = document.createElement("p");
+        inline(p, lines.join(" "), fontes);
+        target.appendChild(p);
+      }
+    }
+  }
+
+  function inline(el: HTMLElement, text: string, fontes: Fonte[]) {
+    const parts = text.split(/(\*\*[^*]+\*\*|\[\d+(?:\s*,\s*\d+)*\])/g);
+    for (const part of parts) {
+      if (!part) continue;
+      const bold = part.match(/^\*\*([^*]+)\*\*$/);
+      const cite = part.match(/^\[(\d+(?:\s*,\s*\d+)*)\]$/);
+      if (bold) {
+        const b = document.createElement("strong");
+        b.textContent = bold[1] ?? "";
+        el.appendChild(b);
+      } else if (cite) {
+        const nums = (cite[1] ?? "").split(",").map((s) => Number(s.trim()));
+        nums.forEach((num, k) => {
+          if (k > 0) {
+            const sep = document.createElement("span");
+            sep.className = "cite";
+            sep.textContent = ",";
+            el.appendChild(sep);
+          }
+          const f = fontes.find((x) => x.n === num);
+          const a = document.createElement("a");
+          a.className = "cite";
+          a.textContent = String(num);
+          if (f) {
+            a.href = docHref(f);
+            a.title = `${f.titulo} · ${f.secao}`;
+          }
+          el.appendChild(a);
+        });
+      } else {
+        el.appendChild(document.createTextNode(part));
+      }
+    }
+  }
+
+  function renderSources(container: HTMLElement, text: string, fontes: Fonte[]) {
+    const used = new Set([...text.matchAll(/\[(\d+(?:\s*,\s*\d+)*)\]/g)].flatMap((m) => (m[1] ?? "").split(",").map((s) => Number(s.trim()))));
+    const list = fontes.filter((f) => used.has(f.n));
+    if (!list.length) return;
+    const box = document.createElement("div");
+    box.className = "sources";
+    box.textContent = "Fontes";
+    const ol = document.createElement("ol");
+    for (const f of list) {
+      const li = document.createElement("li");
+      li.value = f.n;
+      const a = document.createElement("a");
+      a.href = docHref(f);
+      a.textContent = f.titulo;
+      li.append(a, document.createTextNode(` · Volume ${f.volume}, ${f.secao}`));
+      ol.appendChild(li);
+    }
+    box.appendChild(ol);
+    container.appendChild(box);
+  }
+
+  function errorBox(container: HTMLElement, message: string) {
+    const e = document.createElement("div");
+    e.className = "msg-err";
+    e.textContent = message;
+    container.replaceChildren(e);
+  }
+
+  async function ask(question: string) {
+    sugs.hidden = true;
+    send.disabled = true;
+    const item = document.createElement("div");
+    const qEl = document.createElement("div");
+    qEl.className = "msg-q";
+    qEl.textContent = question;
+    const aEl = document.createElement("div");
+    aEl.className = "msg-a";
+    const cursor = document.createElement("span");
+    cursor.className = "typing";
+    aEl.appendChild(cursor);
+    item.append(qEl, aEl);
+    thread.appendChild(item);
+    item.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    let text = "";
+    let fontes: Fonte[] = [];
+    try {
+      const res = await fetch(`${api}/api/perguntar`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pergunta: question, elo, historico: history.slice(-6) }),
+      });
+      if (res.status === 429) throw new Error("Muitas perguntas seguidas. Aguarde alguns segundos e tente de novo.");
+      if (!res.ok || !res.body) {
+        const body = (await res.json().catch(() => null)) as { erro?: string } | null;
+        throw new Error(body?.erro ?? "O assistente não respondeu agora. Tente de novo em instantes.");
+      }
+      const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
+      let buf = "";
+      let done = false;
+      while (!done) {
+        const chunk = await reader.read();
+        if (chunk.done) break;
+        buf += chunk.value;
+        let i: number;
+        while ((i = buf.indexOf("\n\n")) >= 0) {
+          const block = buf.slice(0, i);
+          buf = buf.slice(i + 2);
+          const event = block.match(/^event:\s*(.*)$/m)?.[1]?.trim();
+          const data = block.split("\n").filter((l) => l.startsWith("data:")).map((l) => l.slice(5).trimStart()).join("\n");
+          if (!event || !data) continue;
+          const payload = JSON.parse(data) as Record<string, unknown>;
+          if (event === "fontes") fontes = payload as unknown as Fonte[];
+          else if (event === "delta") {
+            text += String(payload["t"] ?? "");
+            renderAnswer(aEl, text, fontes);
+            aEl.appendChild(cursor);
+          } else if (event === "erro") throw new Error(String(payload["mensagem"] ?? "Erro."));
+          else if (event === "fim") {
+            done = true;
+            if (payload["stop_reason"] === "refusal") text += "\n\nO assistente não pode responder a esta pergunta.";
+          }
+        }
+      }
+      renderAnswer(aEl, text, fontes);
+      renderSources(aEl, text, fontes);
+      history.push({ papel: "usuario", texto: question }, { papel: "assistente", texto: text });
+    } catch (err) {
+      errorBox(aEl, err instanceof Error && err.message !== "Failed to fetch" ? err.message : "Sem conexão com o assistente. Tente de novo em instantes.");
+    } finally {
+      send.disabled = false;
+      q.focus();
+    }
+  }
+
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const question = q.value.trim();
+    if (question.length < 3 || send.disabled) return;
+    q.value = "";
+    count.textContent = "0/600";
+    void ask(question);
+  });
+  q.addEventListener("keydown", (ev) => {
+    if (ev.key === "Enter" && !ev.shiftKey) {
+      ev.preventDefault();
+      form.requestSubmit();
+    }
+  });
+  q.addEventListener("input", () => (count.textContent = `${q.value.length}/600`));
+  sugs.querySelectorAll<HTMLButtonElement>(".sug").forEach((b) => b.addEventListener("click", () => void ask(b.textContent ?? "")));
+  document.querySelectorAll<HTMLButtonElement>("[data-elo]").forEach((b) =>
+    b.addEventListener("click", () => {
+      elo = b.dataset["elo"] ?? "";
+      document.querySelectorAll("[data-elo]").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    }),
+  );
+
+  const params = new URLSearchParams(location.search);
+  const preElo = params.get("elo");
+  if (preElo) document.querySelector<HTMLButtonElement>(`[data-elo="${CSS.escape(preElo)}"]`)?.click();
+  const preQ = params.get("q");
+  if (preQ && preQ.length <= 600) void ask(preQ);
+</script>

@@ -1,0 +1,298 @@
+---
+import { url } from "../../../lib/url.ts";
+import Base from "../../../layouts/Base.astro";
+import Rug from "../../../components/Rug.astro";
+import Triangle from "../../../components/Triangle.astro";
+import type { Marca } from "../../../lib/types.ts";
+import { elos, eloBySlug, ranked, brandUrl } from "../../../lib/data.ts";
+import { PILARES } from "../../../lib/meta.ts";
+import { n, pct, compact, int, native } from "../../../lib/format.ts";
+import type { Pilar } from "../../../lib/types.ts";
+
+export function getStaticPaths() {
+  return elos.flatMap((e) => e.marcas.map((m) => ({ params: { elo: e.slug, marca: m.slug } })));
+}
+
+const e = eloBySlug(Astro.params.elo!);
+const m = e.marcas.find((x) => x.slug === Astro.params.marca)!;
+const r = ranked(e);
+const pillarVals = PILARES.map((p) => ({ ...p, v: m.pilares[p.id] })).filter((p) => p.v !== null);
+const best = [...pillarVals].sort((a, b) => b.v! - a.v!)[0];
+const pillarMax = Math.ceil(Math.max(...e.marcas.flatMap((x) => Object.values(x.pilares).filter((v): v is number => v !== null))) / 5) * 5;
+const rankIn = (vals: (number | null)[], v: number | null) =>
+  v === null ? null : [...vals].filter((x): x is number => x !== null).sort((a, b) => b - a).indexOf(v) + 1;
+const pilarNome = (id: Pilar) => PILARES.find((p) => p.id === id)!.nome;
+/** "0.354 a 0.526" → "35,4% a 52,6%" */
+const icFmt = (ic: string) => ic.split(" a ").map((x) => pct(Number(x) * 100)).join(" a ");
+const canais: { titulo: string; pick: (x: Marca) => number | null; fmt: (v: number) => string }[] = [
+  { titulo: "Menção nas IAs", pick: (x) => x.ia.mencao, fmt: (v) => pct(v, 0) },
+  { titulo: "Resposta ao público", pick: (x) => x.resposta.porComentario, fmt: (v) => pct(v, 0) },
+  { titulo: "Busca sem marca", pick: (x) => x.categoriaTop10, fmt: (v) => pct(v, 0) },
+  { titulo: "Imprensa", pick: (x) => x.materias, fmt: (v) => `${int(v)} matérias` },
+  { titulo: "Instagram", pick: (x) => x.seguidores.instagram, fmt: (v) => compact(v) },
+];
+const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase()}?`;
+---
+<Base title={`${m.nome} · ${e.nome}`} section="marcas" description={`Presença digital de ${m.nome} em ${e.nome}: participação ${n(m.total)}, pilares, IA, busca, redes e imprensa.`}>
+  <section class="page brand-hero">
+    <div>
+      <p class="breadcrumb"><a href={url("/")}>Panorama</a> / <a href={url(`/elos/${e.slug}/`)}>{e.nome}</a> / {m.nome}</p>
+      <p class="kicker">{e.nome} · Volume {e.volume}</p>
+      <h1 style="font-size: clamp(44px, 7vw, 88px);">{m.nome}</h1>
+      <p class="hero-line">
+        {m.total !== null
+          ? `${m.posicaoModal}º lugar mais provável · mais forte em ${best?.nome}`
+          : "Sem total: falta cobertura em Fidelidade"}
+      </p>
+    </div>
+    <Triangle nome="" pilares={m.pilares} total={m.total} max={pillarMax} referencia={e.referencia} destaque size={340} escala="propria" />
+  </section>
+  <section class="page" style="padding-bottom: 56px;">
+    <div class="brand-canais">
+      {canais.map((c) => {
+        const v = c.pick(m);
+        const pos = rankIn(e.marcas.map(c.pick), v);
+        return (
+          <div>
+            <span class="bc-t">{c.titulo}</span>
+            <b>{v === null ? "N/A" : c.fmt(v)}</b>
+            <span class="bc-p">{pos ? `${pos}º de ${e.marcas.filter((x) => c.pick(x) !== null).length} no elo` : ""}</span>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page">
+      <div class="prose">
+        <p class="kicker">Pilares</p>
+        <h2>Contra o painel</h2>
+        <aside class="note">Traços cinza: as demais {e.unidade === "grupo" ? "grupos" : "marcas"} do elo. Ponto: {m.nome}. Linha tracejada: a igualdade ({n(e.referencia)}).</aside>
+      </div>
+      <div class="pillar-rows">
+        {PILARES.map((p) => {
+          const vals = e.marcas.filter((x) => x.slug !== m.slug).map((x) => x.pilares[p.id]).filter((v): v is number => v !== null);
+          const pos = rankIn(e.marcas.map((x) => x.pilares[p.id]), m.pilares[p.id]);
+          return (
+            <div class="prow">
+              <div class="plabel"><span class="swatch" style={`background:var(--p-${p.id})`}></span><b>{p.nome}</b><span class="muted small">{p.pergunta}</span></div>
+              <div class="pvalue num">{n(m.pilares[p.id])}<span class="muted small">{pos ? ` · ${pos}º de ${e.marcas.filter((x) => x.pilares[p.id] !== null).length}` : ""}</span></div>
+              <div class="prug"><Rug values={vals} value={m.pilares[p.id]} max={pillarMax} color={`var(--p-${p.id})`} reference={e.referencia} width={520} label={`${p.nome}: ${n(m.pilares[p.id])}`} /></div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page">
+      <div class="prose">
+        <p class="kicker">Submétricas</p>
+        <h2>Medida a medida</h2>
+        <p class="lead">Valor nativo de cada medida e a posição da marca entre as do painel. Itálico: fora da nota.</p>
+      </div>
+      <div class="grid-2" style="margin-top: 24px;">
+        {PILARES.map((p) => {
+          const subs = e.submetricas.filter((s) => s.pilar === p.id);
+          return (
+            <div class:list={{ wide: p.id === "proeminencia" }}>
+              <h3 class="sub-h"><span class="swatch" style={`background:var(--p-${p.id})`}></span>{pilarNome(p.id)}</h3>
+              <ul class="subs">
+                {subs.map((s) => {
+                  const mine = s.valores.find((v) => v.marca === m.slug);
+                  const others = s.valores.filter((v) => v.marca !== m.slug && v.participacao !== null).map((v) => v.participacao!);
+                  const max = Math.max(...s.valores.map((v) => v.participacao ?? 0), 1);
+                  const pos = rankIn(s.valores.map((v) => v.participacao), mine?.participacao ?? null);
+                  const nv = s.valores.filter((v) => v.participacao !== null).length;
+                  return (
+                    <li class:list={{ off: !s.naNota }}>
+                      <div class="sname" title={s.descricao}>{s.nome}</div>
+                      <div class="sval num">{native(mine?.valor ?? null, s.unidade)}</div>
+                      <div class="srug"><Rug values={others} value={mine?.participacao ?? null} max={max} color={`var(--p-${p.id})`} label={`${s.nome}: participação ${n(mine?.participacao ?? null)}`} /></div>
+                      <div class="spos num muted">{pos ? `${pos}º/${nv}` : "N/A"}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page grid-2">
+      <div>
+        <p class="kicker">Detalhe dos canais</p>
+        <table class="t">
+          <tbody>
+            <tr><td>Menção pelas IAs</td><td class="num">{pct(m.ia.mencao)}{m.ia.ic95 && <span class="muted small"> (IC 95%: {icFmt(m.ia.ic95)})</span>}</td></tr>
+            <tr><td>Primeira citação pelas IAs</td><td class="num">{pct(m.ia.primeira)}</td></tr>
+            <tr><td>Respostas apoiadas em página própria</td><td class="num">{pct(m.ia.fontePropria)}</td></tr>
+            {m.ia.soGrupo !== null && <tr><td>Menção só ao nome do grupo</td><td class="num">{pct(m.ia.soGrupo)}</td></tr>}
+            <tr><td>Busca pela marca, por mês</td><td class="num">{int(m.buscaMarca)}</td></tr>
+            <tr><td>Busca de categoria com página no top 10</td><td class="num">{pct(m.categoriaTop10)}</td></tr>
+            <tr><td>Respostas por comentário no Instagram</td><td class="num">{pct(m.resposta.porComentario)}</td></tr>
+            <tr><td>Comentários respondidos</td><td class="num">{pct(m.resposta.respondidos)}</td></tr>
+            <tr><td>Mediana de horas até responder</td><td class="num">{n(m.resposta.horasMediana)}</td></tr>
+            <tr><td>Seguidores no Instagram</td><td class="num">{compact(m.seguidores.instagram)}</td></tr>
+            <tr><td>Seguidores no Facebook</td><td class="num">{compact(m.seguidores.facebook)}</td></tr>
+            <tr><td>Inscritos no YouTube</td><td class="num">{compact(m.seguidores.youtube)}</td></tr>
+          </tbody>
+        </table>
+        {e.unidade === "grupo" && <p class="fig-caption">Audiência e resposta valem pela maior marca própria do grupo, nunca pela soma de perfis.</p>}
+      </div>
+      <div>
+        {m.submarcas.length > 0 && (
+          <>
+            <p class="kicker">Submarcas</p>
+            <ul class="sublist">{m.submarcas.map((s) => <li>{s.nome}{s.descritiva && <span class="pill" style="margin-left:8px;">descritiva</span>}</li>)}</ul>
+          </>
+        )}
+        <p class="kicker" style={m.submarcas.length ? "margin-top:40px;" : ""}>Pergunte ao estudo</p>
+        <p class="callout">{pergunta}</p>
+        <p style="margin-top:20px;"><a class="btn primary" href={url(`/pergunte/?q=${encodeURIComponent(pergunta)}&elo=${e.segmento}`)}>Perguntar</a></p>
+        <p class="kicker" style="margin-top:48px;">Outras do elo</p>
+        <div class="chips">{r.filter((x) => x.slug !== m.slug).map((x) => <a class="chip" href={brandUrl(e, x)}>{x.nome}</a>)}</div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .brand-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    align-items: center;
+    padding-top: 56px;
+    padding-bottom: 24px;
+  }
+  @media (min-width: 860px) {
+    .brand-hero { grid-template-columns: 1fr 360px; }
+  }
+  .hero-line {
+    font: 400 20px/1.4 var(--serif);
+    color: var(--ink-2);
+    margin: 18px 0 0;
+  }
+  .brand-canais {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
+    border-top: 1px solid var(--rule-strong);
+    border-bottom: 1px solid var(--rule);
+  }
+  .brand-canais > div {
+    padding: 18px 16px 18px 0;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .brand-canais > div:last-child { border-right: 0; }
+  .bc-t { font-size: 13px; color: var(--ink-3); }
+  .brand-canais b { font: 400 30px/1 var(--serif); }
+  .bc-p { font-size: 12.5px; color: var(--brand-ink); }
+  .pillar-rows {
+    margin-top: 36px;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .prow {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px 32px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .prow {
+      grid-template-columns: 300px 130px 1fr;
+    }
+  }
+  .plabel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 10px;
+  }
+  .plabel .muted {
+    flex-basis: 100%;
+    padding-left: 20px;
+  }
+  .pvalue {
+    font: 400 30px/1 var(--serif);
+  }
+  .pvalue .small {
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  .sub-h {
+    font: 600 15px/1.3 var(--sans);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule-strong);
+  }
+  .wide {
+    grid-column: 1 / -1;
+  }
+  .subs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0 40px;
+  }
+  .wide .subs {
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  }
+  .subs li {
+    display: grid;
+    grid-template-columns: minmax(120px, 1.1fr) 110px minmax(90px, 1fr) 48px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 14px;
+  }
+  .subs li.off .sname {
+    font-style: italic;
+    color: var(--ink-3);
+  }
+  .sval {
+    color: var(--ink-2);
+    font-size: 13px;
+    text-align: right;
+  }
+  .spos {
+    text-align: right;
+    font-size: 12.5px;
+  }
+  @media (max-width: 560px) {
+    .subs li {
+      grid-template-columns: 1fr 90px 44px;
+    }
+    .srug {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+    .wide .subs {
+      grid-template-columns: 1fr;
+    }
+  }
+  .sublist {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--rule-strong);
+  }
+  .sublist li {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+</style>

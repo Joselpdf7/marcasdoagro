@@ -1,0 +1,42 @@
+---
+import { url } from "../../lib/url.ts";
+import Base from "../../layouts/Base.astro";
+import Chart from "../../components/Chart.astro";
+import { elos, leader, panelPayload } from "../../lib/data.ts";
+import { n } from "../../lib/format.ts";
+---
+<Base title="Elos" section="elos" description="Os quatro painéis do estudo: defensivos, máquinas, fertilizantes e sementes.">
+  <section class="page" style="padding-top:56px;padding-bottom:24px;">
+    <p class="kicker">Quatro elos, uma régua</p>
+    <h1 style="font-size:clamp(40px,6vw,76px);">Escolha um elo</h1>
+    <p class="lead">Cada painel é autônomo e só se compara consigo mesmo. O que se compara entre elos são as formas: quem lidera, a distância entre as primeiras e o tamanho dos empates.</p>
+  </section>
+  <section class="section">
+    <div class="page multiples two">
+      {elos.map((e) => {
+        const l = leader(e);
+        return (
+          <a class="elo-card" href={url(`/elos/${e.slug}/`)}>
+            <p class="kicker">Volume {e.volume} · {e.marcas.length} {e.unidade === "grupo" ? "grupos" : "marcas"}</p>
+            <h2>{e.nome}</h2>
+            <p class="muted">Líder: <b style="color:var(--ink);font-weight:500;">{l.nome}</b>, {n(l.total)} de participação.</p>
+            <Chart payload={panelPayload(e)} label={`Painel de ${e.nome}`} />
+            <span class="go">Abrir o painel →</span>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+</Base>
+<style>
+  .elo-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+    border-top: 2px solid var(--ink);
+    padding-top: 22px;
+  }
+  .elo-card h2 { margin: 6px 0 10px; }
+  .elo-card .go { display: inline-block; margin-top: 10px; color: var(--brand-ink); font-weight: 500; }
+  .elo-card:hover h2 { color: var(--brand-ink); }
+</style>

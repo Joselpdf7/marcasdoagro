@@ -1,0 +1,23 @@
+---
+import type { ChartPayload } from "../lib/charts/payloads.ts";
+interface Props {
+  payload: ChartPayload;
+  label: string;
+  title?: string;
+  sub?: string;
+}
+const { payload, label, title, sub } = Astro.props;
+---
+<figure class="figure">
+  {title && <p class="fig-title">{title}</p>}
+  {sub && <p class="fig-sub">{sub}</p>}
+  <slot name="legend" />
+  <div class="chart" role="img" aria-label={label} data-payload={JSON.stringify(payload)}></div>
+  <slot name="caption" />
+  {Astro.slots.has("table") && (
+    <details class="data-table">
+      <summary>Ver os números</summary>
+      <slot name="table" />
+    </details>
+  )}
+</figure>

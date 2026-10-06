@@ -1,0 +1,16 @@
+# deps / builds
+node_modules/
+dist/
+build/
+target/
+.astro/
+# env
+.env
+.env.*
+!.env.example
+# os
+.DS_Store
+# model cache (downloaded at runtime)
+api/.fastembed_cache/
+# study PDFs stay out of the public repository until launch
+web/public/relatorios/*.pdf

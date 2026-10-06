@@ -1,0 +1,139 @@
+---
+// Bertin-style reorderable matrix, one per pillar (small multiples).
+// Bar length is relative to the column maximum, so each column reads "who owns this measure".
+import type { Elo } from "../lib/types.ts";
+import { PILARES } from "../lib/meta.ts";
+import { ranked, brandUrl } from "../lib/data.ts";
+import { n, native } from "../lib/format.ts";
+
+interface Props { elo: Elo }
+const { elo } = Astro.props;
+const marcas = ranked(elo);
+---
+{PILARES.map((p) => {
+  const subs = elo.submetricas.filter((s) => s.pilar === p.id);
+  return (
+    <div class="matrix-block">
+      <h3 class="matrix-title"><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.nome}<span class="muted small">{p.pergunta}</span></h3>
+      <div class="table-wrap">
+        <table class="t matrix">
+          <thead>
+            <tr>
+              <th scope="col">{elo.unidade === "grupo" ? "Grupo" : "Marca"}</th>
+              {subs.map((s) => (
+                <th scope="col" class:list={["mcol", { off: !s.naNota }]} title={`${s.descricao}${s.nota ? ` Nota: ${s.nota}` : ""}`}>
+                  {s.nome}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {marcas.map((m) => (
+              <tr>
+                <th scope="row" class="name"><a href={brandUrl(elo, m)}>{m.nome}</a></th>
+                {subs.map((s) => {
+                  const v = s.valores.find((x) => x.marca === m.slug);
+                  const colMax = Math.max(...s.valores.map((x) => x.participacao ?? 0), 0.0001);
+                  const share = v?.participacao ?? null;
+                  const isTop = share !== null && share === colMax;
+                  const tip = `${m.nome} · ${s.nome}: ${native(v?.valor ?? null, s.unidade)}${share !== null ? ` · participação ${n(share)}` : ""}`;
+                  return (
+                    <td class="mcell" title={tip} tabindex="0" aria-label={tip}>
+                      {share === null ? (
+                        <span class="na">·</span>
+                      ) : (
+                        <span class="mbar">
+                          <span class="mfill" style={`width:${Math.max(2, (share / colMax) * 100)}%;background:var(--p-${p.id});opacity:${isTop ? 1 : 0.55}`}></span>
+                          <span class:list={["mval", { top: isTop }]}>{n(share, 0)}</span>
+                        </span>
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+})}
+
+<style>
+  .matrix-block {
+    margin-top: 44px;
+  }
+  .matrix-title {
+    font: 600 15px/1.3 var(--sans);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .matrix-title .muted {
+    font-weight: 400;
+  }
+  table.matrix {
+    table-layout: fixed;
+    min-width: 760px;
+  }
+  table.matrix th[scope="row"],
+  table.matrix thead th:first-child {
+    width: 150px;
+    font: 500 13.5px/1.3 var(--sans);
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  table.matrix thead th:first-child {
+    color: var(--ink-3);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  th.mcol {
+    white-space: normal;
+    font-size: 10.5px;
+    line-height: 1.25;
+    letter-spacing: 0.03em;
+    padding-right: 8px;
+    vertical-align: bottom;
+    cursor: help;
+  }
+  th.mcol.off {
+    color: var(--ink-3);
+    border-bottom-style: dashed;
+    font-style: italic;
+  }
+  td.mcell {
+    padding: 7px 8px 7px 0;
+  }
+  td.mcell:focus-visible {
+    outline-offset: -2px;
+  }
+  .mbar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mfill {
+    display: block;
+    height: 8px;
+    border-radius: 0 2px 2px 0;
+    flex: 0 0 auto;
+    max-width: calc(100% - 22px);
+  }
+  .mval {
+    font-size: 11px;
+    color: var(--ink-3);
+    font-variant-numeric: tabular-nums;
+  }
+  .mval.top {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

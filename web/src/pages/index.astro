@@ -1,0 +1,305 @@
+---
+import { url } from "../lib/url.ts";
+import Base from "../layouts/Base.astro";
+import Chart from "../components/Chart.astro";
+import {
+  elos,
+  ranked,
+  leader,
+  pillarLeader,
+  panelPayload,
+  slopePayload,
+  dumbbellPayload,
+  stripAcrossElos,
+  pressPayload,
+  sitePayload,
+  positionsPayload,
+  shortName,
+  brandUrl,
+} from "../lib/data.ts";
+import { PILARES } from "../lib/meta.ts";
+import { n, pct, int } from "../lib/format.ts";
+
+const resposta = stripAcrossElos((m) => m.resposta.porComentario, { unit: "%", xMax: 100, labelAbove: 50 });
+const categoria = stripAcrossElos((m) => m.categoriaTop10, { unit: "%", xMax: 60, labelAbove: 30 });
+const imprensa = pressPayload();
+
+const perguntas = [
+  "Quem lidera cada elo e com que margem?",
+  "Quais marcas respondem mais aos comentários no Instagram?",
+  "Como os assistentes de IA citam as marcas de sementes?",
+  "Por que Bayer e BASF ficam sem total nas sementes?",
+];
+---
+<Base title="MarcasdoAgro" section="panorama">
+  <section class="page" style="padding-top: clamp(48px, 9vw, 120px); padding-bottom: 72px;">
+    <p class="kicker rise">Panorama da presença digital do agro brasileiro · set 2025 a set 2026</p>
+    <h1 class="rise d1">Quando o produtor procura,<br /><em>quem ele encontra?</em></h1>
+    <p class="lead rise d2">
+      Quatro elos da lavoura, 33 marcas e grupos, uma mesma régua. Um estudo independente do Olhar Público sobre como
+      fabricantes de defensivos, máquinas, fertilizantes e sementes aparecem na busca, nas redes, na imprensa e nas
+      respostas dos assistentes de inteligência artificial.
+    </p>
+    <p class="rise d3" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:34px;">
+      <a class="btn primary" href="#paineis">Ver os quatro painéis</a>
+      <a class="btn" href={url("/pergunte/")}>Pergunte ao estudo</a>
+    </p>
+    <div class="stat-row rise d3" role="list">
+      <div class="stat" role="listitem"><b>4</b><span>elos da lavoura, cada um com o seu painel</span></div>
+      <div class="stat" role="listitem"><b>33</b><span>marcas e grupos, 25 submarcas nas sementes</span></div>
+      <div class="stat" role="listitem"><b>28–30</b><span>submétricas em três pilares com nota</span></div>
+      <div class="stat" role="listitem"><b>4</b><span>assistentes de IA, 60 perguntas por elo</span></div>
+      <div class="stat" role="listitem"><b>15</b><span>veículos de imprensa por elo, 12 meses</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="paineis">
+    <div class="page">
+      <div class="prose">
+        <p class="kicker">Os quatro painéis</p>
+        <h2>Um líder estável em cada elo. <em>Abaixo dele, empates.</em></h2>
+        <p class="lead">
+          Cada ponto é a participação da marca no total observado do seu elo, a média de três pilares. Em todos os
+          cenários testados a primeira posição não muda. Abaixo do topo, a evidência separa pouco.
+        </p>
+        <aside class="note">
+          <strong>Como ler.</strong> A linha tracejada marca a igualdade: a participação que cada marca teria se todas
+          fossem iguais (12,5 num painel de oito; 11,1 num de nove). O eixo é o mesmo nos quatro painéis só para comparar
+          formas. Valores não se comparam entre elos.
+        </aside>
+      </div>
+      <div class="multiples" style="margin-top:44px;">
+        {elos.map((e) => {
+          const l = leader(e);
+          return (
+            <div class="multiple">
+              <h4><a href={url(`/elos/${e.slug}/`)}>{e.nome}</a><span>Vol. {e.volume}</span></h4>
+              <Chart payload={panelPayload(e)} label={`Participação por marca em ${e.nome}; líder ${l.nome} com ${n(l.total)}`}>
+                {e.marcas.some((m) => m.total === null) && (
+                  <p slot="caption" class="fig-caption">
+                    Sem total: {e.marcas.filter((m) => m.total === null).map((m) => m.nome).join(" e ")}. Nenhuma submarca tem perfil próprio com cobertura suficiente para Fidelidade.
+                  </p>
+                )}
+              </Chart>
+            </div>
+          );
+        })}
+      </div>
+      <details class="data-table">
+        <summary>Ver os números dos quatro painéis</summary>
+        <div class="table-wrap">
+          <table class="t">
+            <thead><tr><th>Elo</th><th>Marca ou grupo</th><th class="num">Participação</th><th class="num">Posição modal</th></tr></thead>
+            <tbody>
+              {elos.flatMap((e) => ranked(e).map((m) => (
+                <tr><td>{shortName(e)}</td><td class="name"><a href={brandUrl(e, m)}>{m.nome}</a></td><td class="num">{n(m.total)}</td><td class="num">{m.posicaoModal ?? "N/A"}</td></tr>
+              )))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page">
+      <p class="kicker">Seis leituras que atravessam a série</p>
+      <h2 style="max-width:22ch;">O que se repete nos quatro elos</h2>
+
+      <article class="reading" style="margin-top:72px;">
+        <div>
+          <div class="reading-num">I</div>
+          <h3>Ser procurado e cuidar de quem chega são capacidades diferentes.</h3>
+          <p>
+            Só nos defensivos a mesma marca lidera os três pilares. Nas máquinas, a Stara é sétima em Proeminência e primeira
+            em Fidelidade. Nos fertilizantes, a Timac Agro é sexta em Proeminência e lidera Fidelidade.
+          </p>
+          <p class="small muted">Cada linha liga a Proeminência da marca à sua Fidelidade. Em destaque, a marca que mais sobe.</p>
+        </div>
+        <div>
+          <div class="multiples two">
+            {elos.map((e) => (
+              <div class="multiple">
+                <h4>{e.nome}</h4>
+                <Chart payload={slopePayload(e)} label={`Proeminência e Fidelidade por marca em ${e.nome}`} />
+              </div>
+            ))}
+          </div>
+          <div class="table-wrap" style="margin-top:28px;">
+            <table class="t">
+              <caption>Líder de cada pilar, com a sua participação no pilar.</caption>
+              <thead><tr><th>Pilar</th>{elos.map((e) => <th>{shortName(e)}</th>)}</tr></thead>
+              <tbody>
+                {PILARES.map((p) => (
+                  <tr>
+                    <td><span class="swatch" style={`display:inline-block;margin-right:8px;background:var(--p-${p.id})`}></span>{p.nome}</td>
+                    {elos.map((e) => {
+                      const m = pillarLeader(e, p.id);
+                      return <td><a href={brandUrl(e, m)}>{m.nome}</a> <span class="muted num">{n(m.pilares[p.id])}</span></td>;
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="reading" style="margin-top:96px;">
+        <div>
+          <div class="reading-num">II</div>
+          <h3>Os assistentes de IA repetem a hierarquia de lembrança e a acentuam.</h3>
+          <p>
+            Sessenta perguntas de produtor por elo, três vezes a cada um de quatro assistentes. Em cada elo, no máximo duas
+            marcas são a primeira citada em mais de 10% das respostas. Quem não é lembrado primeiro quase nunca é lembrado depois.
+          </p>
+          <ul class="legend">
+            <li><span class="swatch" style="background:var(--brand-ink)"></span>Primeira citação</li>
+            <li><span class="swatch" style="border:1.5px solid var(--ink-2)"></span>Menção em qualquer posição</li>
+          </ul>
+        </div>
+        <div class="multiples two">
+          {elos.map((e) => (
+            <div class="multiple">
+              <h4>{e.nome}</h4>
+              <Chart payload={dumbbellPayload(e)} label={`Menção e primeira citação pelos assistentes de IA em ${e.nome}`} />
+            </div>
+          ))}
+        </div>
+      </article>
+
+      <article class="reading" style="margin-top:96px;">
+        <div>
+          <div class="reading-num">III</div>
+          <h3>Responder ao público é a medida mais desigual da série.</h3>
+          <p>
+            Em cada elo, duas marcas respondem a mais da metade dos comentários que recebem no Instagram. A maioria responde a
+            menos de um em cada dez. Nos fertilizantes, sete das nove marcas ficam abaixo de 10%.
+          </p>
+          <p class="small muted">Cada ponto é uma marca. O traço vertical é a mediana do elo. Nomes acima de 50%. Nas sementes, a medida usa a maior marca própria de cada grupo: Monsoy pela Bayer e Nidera pela Syngenta.</p>
+        </div>
+        <Chart payload={resposta} label="Respostas da marca por comentário do público no Instagram, por elo">
+          <div slot="table" class="table-wrap">
+            <table class="t">
+              <thead><tr><th>Elo</th><th>Marca</th><th class="num">Respostas por comentário</th></tr></thead>
+              <tbody>{elos.flatMap((e) => [...e.marcas].sort((a, b) => (b.resposta.porComentario ?? -1) - (a.resposta.porComentario ?? -1)).map((m) => <tr><td>{shortName(e)}</td><td>{m.nome}</td><td class="num">{pct(m.resposta.porComentario)}</td></tr>))}</tbody>
+            </table>
+          </div>
+        </Chart>
+      </article>
+
+      <article class="reading" style="margin-top:96px;">
+        <div>
+          <div class="reading-num">IV</div>
+          <h3>Na busca sem marca, o produtor encontra portais, não fabricantes.</h3>
+          <p>
+            Cerca de cem consultas de categoria por elo, como "fungicida soja" ou "trator para soja". Portais de agro, instituições
+            de pesquisa, marketplaces e vídeos ocupam a maior parte dos dez primeiros resultados.
+          </p>
+          <p class="small muted">Parcela das consultas em que a marca tem página própria no top 10. Nomes acima de 30%.</p>
+        </div>
+        <Chart payload={categoria} label="Presença em busca de categoria sem marca, por elo">
+          <div slot="table" class="table-wrap">
+            <table class="t">
+              <thead><tr><th>Elo</th><th>Marca</th><th class="num">Consultas com página no top 10</th></tr></thead>
+              <tbody>{elos.flatMap((e) => [...e.marcas].sort((a, b) => (b.categoriaTop10 ?? -1) - (a.categoriaTop10 ?? -1)).map((m) => <tr><td>{shortName(e)}</td><td>{m.nome}</td><td class="num">{pct(m.categoriaTop10)}</td></tr>))}</tbody>
+            </table>
+          </div>
+        </Chart>
+      </article>
+
+      <article class="reading" style="margin-top:96px;">
+        <div>
+          <div class="reading-num">V</div>
+          <h3>A imprensa concentra, e fala do grupo, não do produto.</h3>
+          <p>
+            Nos fertilizantes, as duas marcas mais cobertas somam quase três quartos das matérias, com pauta de balanço, fábrica e
+            operação societária. Nas sementes, a imprensa cita o grupo e raramente a submarca que fala com o produtor.
+          </p>
+        </div>
+        <Chart payload={imprensa} label="Concentração das matérias de imprensa nas duas marcas mais cobertas, por elo">
+          <ul slot="legend" class="legend">
+            <li><span class="swatch" style="background:var(--brand-ink)"></span>Mais coberta</li>
+            <li><span class="swatch" style="background:var(--seq-2)"></span>Segunda</li>
+            <li><span class="swatch" style="background:var(--paper-3)"></span>Demais marcas do painel</li>
+          </ul>
+          <div slot="table" class="table-wrap">
+            <table class="t">
+              <thead><tr><th>Elo</th><th>Marca</th><th class="num">Matérias em 12 meses</th></tr></thead>
+              <tbody>{elos.flatMap((e) => [...e.marcas].sort((a, b) => (b.materias ?? -1) - (a.materias ?? -1)).map((m) => <tr><td>{shortName(e)}</td><td>{m.nome}</td><td class="num">{int(m.materias)}</td></tr>))}</tbody>
+            </table>
+          </div>
+        </Chart>
+      </article>
+
+      <article class="reading" style="margin-top:96px;">
+        <div>
+          <div class="reading-num">VI</div>
+          <h3>No site, o básico já é comum. A diferença está na velocidade.</h3>
+          <p>
+            Dez itens de autoatendimento, como localizador de revenda, área do produtor e catálogo com bula, aparecem na maioria
+            dos sites. A nota de desempenho, medida em três páginas comparáveis, espalha mais as marcas em defensivos, máquinas e
+            sementes. Nos fertilizantes é o contrário: o autoatendimento vai de metade a todos os itens.
+          </p>
+          <p class="small muted">Ambas na escala de 0 a 100. Traço vertical: mediana.</p>
+        </div>
+        <div class="multiples two">
+          {elos.map((e) => (
+            <div class="multiple">
+              <h4>{e.nome}</h4>
+              <Chart payload={sitePayload(e)} label={`Autoatendimento e desempenho do site em ${e.nome}`} />
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="page">
+      <div class="prose">
+        <p class="kicker">Empates</p>
+        <h2>Onde a evidência <em>não separa</em> as marcas</h2>
+        <p class="lead">
+          Em vez de uma ordem única, o estudo sorteou dois mil conjuntos de pesos entre submétricas e pilares e contou em que
+          posição cada marca terminou. Células escuras são posições firmes. Linhas espalhadas são empates.
+        </p>
+        <aside class="note">
+          <strong>Regra do estudo.</strong> Uma diferença só vira posição quando resiste a todas as sensibilidades. Abaixo do
+          topo, os quatro painéis mostram blocos de empate e publicam a probabilidade de cada marca em cada posição.
+        </aside>
+      </div>
+      <ul class="legend" style="margin-top:32px;">
+        <li><span class="swatch" style="border-radius:2px;background:var(--seq-0)"></span>menos de 5%</li>
+        <li><span class="swatch" style="border-radius:2px;background:var(--seq-1)"></span>5 a 15%</li>
+        <li><span class="swatch" style="border-radius:2px;background:var(--seq-2)"></span>15 a 35%</li>
+        <li><span class="swatch" style="border-radius:2px;background:var(--seq-3)"></span>35 a 60%</li>
+        <li><span class="swatch" style="border-radius:2px;background:var(--seq-4)"></span>60% ou mais</li>
+      </ul>
+      <div class="multiples two" style="margin-top:12px;">
+        {elos.map((e) => (
+          <div class="multiple">
+            <h4><a href={url(`/elos/${e.slug}/`)}>{e.nome}</a><span>% dos sorteios</span></h4>
+            <Chart payload={positionsPayload(e)} label={`Probabilidade de cada marca em cada posição, ${e.nome}`} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--paper-2);">
+    <div class="page grid-2" style="align-items:end;">
+      <div>
+        <p class="kicker">Pergunte ao estudo</p>
+        <h2>Uma pergunta, <em>a resposta com a fonte.</em></h2>
+        <p class="lead">
+          O assistente responde só com a base de evidências do estudo e cita volume, documento e seção de cada número.
+        </p>
+      </div>
+      <div class="chips" style="flex-direction:column;align-items:flex-start;">
+        {perguntas.map((q) => <a class="chip" href={url(`/pergunte/?q=${encodeURIComponent(q)}`)}>{q}</a>)}
+        <a class="btn primary" style="margin-top:14px;" href={url("/pergunte/")}>Fazer outra pergunta</a>
+      </div>
+    </div>
+  </section>
+</Base>
