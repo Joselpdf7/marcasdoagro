@@ -6,7 +6,7 @@ import Triangle from "../../../components/Triangle.astro";
 import type { Marca } from "../../../lib/types.ts";
 import { elos, eloBySlug, ranked, brandUrl } from "../../../lib/data.ts";
 import { PILARES } from "../../../lib/meta.ts";
-import { n, pct, compact, int, native } from "../../../lib/format.ts";
+import { n, pct, compact, int, native, fatia } from "../../../lib/format.ts";
 import type { Pilar } from "../../../lib/types.ts";
 
 export function getStaticPaths() {
@@ -21,31 +21,29 @@ const best = [...pillarVals].sort((a, b) => b.v! - a.v!)[0];
 const pillarMax = Math.ceil(Math.max(...e.marcas.flatMap((x) => Object.values(x.pilares).filter((v): v is number => v !== null))) / 5) * 5;
 const rankIn = (vals: (number | null)[], v: number | null) =>
   v === null ? null : [...vals].filter((x): x is number => x !== null).sort((a, b) => b - a).indexOf(v) + 1;
-const pilarNome = (id: Pilar) => PILARES.find((p) => p.id === id)!.nome;
-/** "0.354 a 0.526" → "35,4% a 52,6%" */
-const icFmt = (ic: string) => ic.split(" a ").map((x) => pct(Number(x) * 100)).join(" a ");
+const pilarNome = (id: Pilar) => PILARES.find((p) => p.id === id)!.simples;
 const canais: { titulo: string; pick: (x: Marca) => number | null; fmt: (v: number) => string }[] = [
-  { titulo: "Menção nas IAs", pick: (x) => x.ia.mencao, fmt: (v) => pct(v, 0) },
-  { titulo: "Resposta ao público", pick: (x) => x.resposta.porComentario, fmt: (v) => pct(v, 0) },
-  { titulo: "Busca sem marca", pick: (x) => x.categoriaTop10, fmt: (v) => pct(v, 0) },
-  { titulo: "Imprensa", pick: (x) => x.materias, fmt: (v) => `${int(v)} matérias` },
+  { titulo: "Citada pelas IAs", pick: (x) => x.ia.mencao, fmt: (v) => pct(v, 0) },
+  { titulo: "Responde comentários", pick: (x) => x.resposta.porComentario, fmt: (v) => pct(v, 0) },
+  { titulo: "Aparece em buscas gerais", pick: (x) => x.categoriaTop10, fmt: (v) => pct(v, 0) },
+  { titulo: "Notícias em 1 ano", pick: (x) => x.materias, fmt: (v) => int(v) },
   { titulo: "Instagram", pick: (x) => x.seguidores.instagram, fmt: (v) => compact(v) },
 ];
 const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase()}?`;
 ---
-<Base title={`${m.nome} · ${e.nome}`} section="marcas" description={`Presença digital de ${m.nome} em ${e.nome}: participação ${n(m.total)}, pilares, IA, busca, redes e imprensa.`}>
+<Base title={`${m.nome} · ${e.nome}`} section="marcas" description={`Presença digital de ${m.nome} em ${e.nome}: fatia de ${fatia(m.total)} do setor.`}>
   <section class="page brand-hero">
     <div>
       <p class="breadcrumb"><a href={url("/")}>Panorama</a> / <a href={url(`/elos/${e.slug}/`)}>{e.nome}</a> / {m.nome}</p>
-      <p class="kicker">{e.nome} · Volume {e.volume}</p>
+      <p class="kicker">{e.nome}</p>
       <h1 style="font-size: clamp(44px, 7vw, 88px);">{m.nome}</h1>
       <p class="hero-line">
         {m.total !== null
-          ? `${m.posicaoModal}º lugar mais provável · mais forte em ${best?.nome}`
-          : "Sem total: falta cobertura em Fidelidade"}
+          ? `Fica com ${fatia(m.total)} da presença digital do setor. Posição mais provável: ${m.posicaoModal}º lugar. Ponto forte: ${best?.simples.toLowerCase()}.`
+          : "Sem nota final: não tem perfis próprios nas redes para medir a conversa com o público."}
       </p>
     </div>
-    <Triangle nome="" pilares={m.pilares} total={m.total} max={pillarMax} referencia={e.referencia} destaque size={340} escala="propria" />
+    <Triangle nome="" pilares={m.pilares} total={m.total} max={pillarMax} referencia={e.referencia} destaque size={400} escala="propria" />
   </section>
   <section class="page" style="padding-bottom: 56px;">
     <div class="brand-canais">
@@ -55,8 +53,8 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
         return (
           <div>
             <span class="bc-t">{c.titulo}</span>
-            <b>{v === null ? "N/A" : c.fmt(v)}</b>
-            <span class="bc-p">{pos ? `${pos}º de ${e.marcas.filter((x) => c.pick(x) !== null).length} no elo` : ""}</span>
+            <b>{v === null ? "—" : c.fmt(v)}</b>
+            <span class="bc-p">{pos ? `${pos}º de ${e.marcas.filter((x) => c.pick(x) !== null).length} no setor` : ""}</span>
           </div>
         );
       })}
@@ -66,9 +64,8 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
   <section class="section">
     <div class="page">
       <div class="prose">
-        <p class="kicker">Pilares</p>
-        <h2>Contra o painel</h2>
-        <aside class="note">Traços cinza: as demais {e.unidade === "grupo" ? "grupos" : "marcas"} do elo. Ponto: {m.nome}. Linha tracejada: a igualdade ({n(e.referencia)}).</aside>
+        <h2>Comparada às concorrentes</h2>
+        <p class="lead">Cada traço cinza é uma concorrente. O ponto colorido é {m.nome}. Mais à direita, mais forte.</p>
       </div>
       <div class="pillar-rows">
         {PILARES.map((p) => {
@@ -76,9 +73,9 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
           const pos = rankIn(e.marcas.map((x) => x.pilares[p.id]), m.pilares[p.id]);
           return (
             <div class="prow">
-              <div class="plabel"><span class="swatch" style={`background:var(--p-${p.id})`}></span><b>{p.nome}</b><span class="muted small">{p.pergunta}</span></div>
-              <div class="pvalue num">{n(m.pilares[p.id])}<span class="muted small">{pos ? ` · ${pos}º de ${e.marcas.filter((x) => x.pilares[p.id] !== null).length}` : ""}</span></div>
-              <div class="prug"><Rug values={vals} value={m.pilares[p.id]} max={pillarMax} color={`var(--p-${p.id})`} reference={e.referencia} width={520} label={`${p.nome}: ${n(m.pilares[p.id])}`} /></div>
+              <div class="plabel"><span class="swatch" style={`background:var(--p-${p.id})`}></span><b>{p.simples}</b><span class="muted small">{p.pergunta}</span></div>
+              <div class="pvalue num">{pos ? `${pos}º` : "—"}<span class="muted small">{pos ? ` de ${e.marcas.filter((x) => x.pilares[p.id] !== null).length}` : " sem dado"}</span></div>
+              <div class="prug"><Rug values={vals} value={m.pilares[p.id]} max={pillarMax} color={`var(--p-${p.id})`} reference={e.referencia} width={520} label={`${p.simples}: ${fatia(m.pilares[p.id])}`} /></div>
             </div>
           );
         })}
@@ -89,9 +86,8 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
   <section class="section">
     <div class="page">
       <div class="prose">
-        <p class="kicker">Submétricas</p>
         <h2>Medida a medida</h2>
-        <p class="lead">Valor nativo de cada medida e a posição da marca entre as do painel. Itálico: fora da nota.</p>
+        <p class="lead">O resultado da marca em cada medida e a posição dela no setor.</p>
       </div>
       <div class="grid-2" style="margin-top: 24px;">
         {PILARES.map((p) => {
@@ -110,8 +106,8 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
                     <li class:list={{ off: !s.naNota }}>
                       <div class="sname" title={s.descricao}>{s.nome}</div>
                       <div class="sval num">{native(mine?.valor ?? null, s.unidade)}</div>
-                      <div class="srug"><Rug values={others} value={mine?.participacao ?? null} max={max} color={`var(--p-${p.id})`} label={`${s.nome}: participação ${n(mine?.participacao ?? null)}`} /></div>
-                      <div class="spos num muted">{pos ? `${pos}º/${nv}` : "N/A"}</div>
+                      <div class="srug"><Rug values={others} value={mine?.participacao ?? null} max={max} color={`var(--p-${p.id})`} label={`${s.nome}: ${native(mine?.valor ?? null, s.unidade)}`} /></div>
+                      <div class="spos num muted">{pos ? `${pos}º/${nv}` : "—"}</div>
                     </li>
                   );
                 })}
@@ -126,36 +122,34 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
   <section class="section">
     <div class="page grid-2">
       <div>
-        <p class="kicker">Detalhe dos canais</p>
+        <h3 style="margin-bottom:16px;">Em números</h3>
         <table class="t">
           <tbody>
-            <tr><td>Menção pelas IAs</td><td class="num">{pct(m.ia.mencao)}{m.ia.ic95 && <span class="muted small"> (IC 95%: {icFmt(m.ia.ic95)})</span>}</td></tr>
-            <tr><td>Primeira citação pelas IAs</td><td class="num">{pct(m.ia.primeira)}</td></tr>
-            <tr><td>Respostas apoiadas em página própria</td><td class="num">{pct(m.ia.fontePropria)}</td></tr>
-            {m.ia.soGrupo !== null && <tr><td>Menção só ao nome do grupo</td><td class="num">{pct(m.ia.soGrupo)}</td></tr>}
-            <tr><td>Busca pela marca, por mês</td><td class="num">{int(m.buscaMarca)}</td></tr>
-            <tr><td>Busca de categoria com página no top 10</td><td class="num">{pct(m.categoriaTop10)}</td></tr>
-            <tr><td>Respostas por comentário no Instagram</td><td class="num">{pct(m.resposta.porComentario)}</td></tr>
-            <tr><td>Comentários respondidos</td><td class="num">{pct(m.resposta.respondidos)}</td></tr>
-            <tr><td>Mediana de horas até responder</td><td class="num">{n(m.resposta.horasMediana)}</td></tr>
+            <tr><td>Citada pelas IAs</td><td class="num">{pct(m.ia.mencao, 0)} das respostas</td></tr>
+            <tr><td>Citada primeiro pelas IAs</td><td class="num">{pct(m.ia.primeira, 0)} das respostas</td></tr>
+            <tr><td>Buscas pelo nome, por mês</td><td class="num">{int(m.buscaMarca)}</td></tr>
+            <tr><td>Aparece em buscas gerais</td><td class="num">{pct(m.categoriaTop10, 0)} das buscas</td></tr>
+            <tr><td>Comentários respondidos no Instagram</td><td class="num">{pct(m.resposta.porComentario, 0)}</td></tr>
+            <tr><td>Tempo típico para responder</td><td class="num">{m.resposta.horasMediana === null ? "—" : `${n(m.resposta.horasMediana, 0)} horas`}</td></tr>
+            <tr><td>Notícias em 1 ano</td><td class="num">{int(m.materias)}</td></tr>
             <tr><td>Seguidores no Instagram</td><td class="num">{compact(m.seguidores.instagram)}</td></tr>
             <tr><td>Seguidores no Facebook</td><td class="num">{compact(m.seguidores.facebook)}</td></tr>
             <tr><td>Inscritos no YouTube</td><td class="num">{compact(m.seguidores.youtube)}</td></tr>
           </tbody>
         </table>
-        {e.unidade === "grupo" && <p class="fig-caption">Audiência e resposta valem pela maior marca própria do grupo, nunca pela soma de perfis.</p>}
+        {e.unidade === "grupo" && <p class="fig-caption">Para grupos, redes sociais contam pela maior marca do grupo.</p>}
       </div>
       <div>
         {m.submarcas.length > 0 && (
           <>
-            <p class="kicker">Submarcas</p>
-            <ul class="sublist">{m.submarcas.map((s) => <li>{s.nome}{s.descritiva && <span class="pill" style="margin-left:8px;">descritiva</span>}</li>)}</ul>
+            <h3 style="margin-bottom:16px;">Marcas do grupo</h3>
+            <ul class="sublist">{m.submarcas.map((s) => <li>{s.nome}</li>)}</ul>
           </>
         )}
-        <p class="kicker" style={m.submarcas.length ? "margin-top:40px;" : ""}>Pergunte ao estudo</p>
+        <h3 style={m.submarcas.length ? "margin-top:40px;" : ""}>Pergunte ao estudo</h3>
         <p class="callout">{pergunta}</p>
         <p style="margin-top:20px;"><a class="btn primary" href={url(`/pergunte/?q=${encodeURIComponent(pergunta)}&elo=${e.segmento}`)}>Perguntar</a></p>
-        <p class="kicker" style="margin-top:48px;">Outras do elo</p>
+        <h3 style="margin:48px 0 14px;">Outras do setor</h3>
         <div class="chips">{r.filter((x) => x.slug !== m.slug).map((x) => <a class="chip" href={brandUrl(e, x)}>{x.nome}</a>)}</div>
       </div>
     </div>
@@ -172,7 +166,7 @@ const pergunta = `O que explica o resultado de ${m.nome} em ${e.nome.toLowerCase
     padding-bottom: 24px;
   }
   @media (min-width: 860px) {
-    .brand-hero { grid-template-columns: 1fr 360px; }
+    .brand-hero { grid-template-columns: 1fr 400px; }
   }
   .hero-line {
     font: 400 20px/1.4 var(--serif);

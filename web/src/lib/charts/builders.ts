@@ -118,9 +118,11 @@ function panel(p: PanelPayload, t: Tokens): EChartsCoreOption {
           distance: 6,
           color: t.ink2,
           fontSize: 11,
-          formatter: (x: { value: number[] }) => fmt(x.value[0] ?? 0),
+          formatter: (x: { value: number[] }) => `${fmt(x.value[0] ?? 0, 0)}%`,
+          backgroundColor: t.paper,
+          padding: [1, 2],
         },
-        tooltip: { formatter: (x: { dataIndex: number }) => `<b>${rows[x.dataIndex]?.nome}</b><br/>Participação: ${fmt(rows[x.dataIndex]?.total ?? 0)}` },
+        tooltip: { formatter: (x: { dataIndex: number }) => `<b>${rows[x.dataIndex]?.nome}</b><br/>Fatia do setor: ${fmt(rows[x.dataIndex]?.total ?? 0, 0)}%` },
         markLine: {
           silent: true,
           symbol: "none",
@@ -175,7 +177,7 @@ function slope(p: SlopePayload, t: Tokens): EChartsCoreOption {
       lineStyle: { width: hl ? 2.5 : 1.25, color: colorOf(r) },
       itemStyle: { color: colorOf(r) },
       emphasis: { focus: "series", lineStyle: { width: 2.5 } },
-      tooltip: { formatter: () => `<b>${r.nome}</b><br/>${p.left}: ${fmt(r.a)}<br/>${p.right}: ${fmt(r.b)}` },
+      tooltip: { formatter: () => `<b>${r.nome}</b><br/>${p.left}: ${fmt(r.a, 0)}%<br/>${p.right}: ${fmt(r.b, 0)}%` },
       z: r.nome === top ? 4 : 2,
     };
   });
@@ -192,7 +194,7 @@ function slope(p: SlopePayload, t: Tokens): EChartsCoreOption {
         fontSize: 11,
         color: r.nome === top ? t.brand : t.ink2,
         fontWeight: r.nome === top ? 600 : 400,
-        formatter: side === 0 ? `${r.nome}  ${fmt(r.a)}` : `${fmt(r.b)}  ${r.nome}`,
+        formatter: side === 0 ? `${r.nome}  ${fmt(r.a, 0)}%` : `${fmt(r.b, 0)}%  ${r.nome}`,
       },
     })),
     z: 5,
@@ -242,7 +244,7 @@ function dumbbell(p: DumbbellPayload, t: Tokens): EChartsCoreOption {
         symbolSize: 9,
         itemStyle: { color: t.brand },
         data: rows.map((r, i) => (r.primeira === null ? null : [r.primeira, i])),
-        tooltip: { formatter: (x: { value: number[] }) => `<b>${rows[x.value[1] ?? 0]?.nome}</b><br/>Primeira citação: ${fmt(x.value[0] ?? 0)}%` },
+        tooltip: { formatter: (x: { value: number[] }) => `<b>${rows[x.value[1] ?? 0]?.nome}</b><br/>Citada primeiro em ${fmt(x.value[0] ?? 0, 0)}% das respostas` },
         z: 3,
       },
       {
@@ -251,8 +253,8 @@ function dumbbell(p: DumbbellPayload, t: Tokens): EChartsCoreOption {
         symbolSize: 9,
         itemStyle: { color: t.paper, borderColor: t.ink2, borderWidth: 1.5 },
         data: rows.map((r, i) => (r.mencao === null ? null : [r.mencao, i])),
-        label: { show: true, position: "right", color: t.ink3, fontSize: 10, formatter: (x: { value: number[] }) => `${fmt(x.value[0] ?? 0)}%` },
-        tooltip: { formatter: (x: { value: number[] }) => `<b>${rows[x.value[1] ?? 0]?.nome}</b><br/>Menção: ${fmt(x.value[0] ?? 0)}%` },
+        label: { show: true, position: "right", color: t.ink3, fontSize: 10, formatter: (x: { value: number[] }) => `${fmt(x.value[0] ?? 0, 0)}%` },
+        tooltip: { formatter: (x: { value: number[] }) => `<b>${rows[x.value[1] ?? 0]?.nome}</b><br/>Citada em ${fmt(x.value[0] ?? 0, 0)}% das respostas` },
         z: 3,
       },
     ],
@@ -313,7 +315,7 @@ function strip(p: StripPayload, t: Tokens): EChartsCoreOption {
         tooltip: {
           formatter: (x: { dataIndex: number }) => {
             const d = data[x.dataIndex];
-            return d ? `<b>${d.nome}</b> · ${d.row}<br/>${fmt(d.value[0] ?? 0)}${p.unit}` : "";
+            return d ? `<b>${d.nome}</b> · ${d.row}<br/>${fmt(d.value[0] ?? 0, 0)}${p.unit}` : "";
           },
         },
         z: 3,
@@ -350,7 +352,7 @@ function share(p: SharePayload, t: Tokens): EChartsCoreOption {
     }),
     tooltip: {
       formatter: (x: { data: { nome: string; n: number; value: number } }) =>
-        `<b>${x.data.nome}</b><br/>${x.data.n} matérias · ${fmt(x.data.value, 1)}%`,
+        `<b>${x.data.nome}</b><br/>${x.data.n} matérias (${fmt(x.data.value, 0)}%)`,
     },
   }));
   return {
@@ -415,7 +417,7 @@ function positions(p: PositionsPayload, t: Tokens): EChartsCoreOption {
         emphasis: { itemStyle: { borderColor: t.ink, borderWidth: 1 } },
         tooltip: {
           formatter: (x: { value: number[] }) =>
-            `<b>${p.marcas[x.value[1] ?? 0]}</b><br/>${(x.value[0] ?? 0) + 1}º lugar em ${fmt((x.value[2] ?? 0) * 100, 1)}% dos sorteios`,
+            `<b>${p.marcas[x.value[1] ?? 0]}</b><br/>Chance de ficar em ${(x.value[0] ?? 0) + 1}º: ${fmt((x.value[2] ?? 0) * 100, 0)}%`,
         },
       },
     ],
@@ -425,9 +427,9 @@ function positions(p: PositionsPayload, t: Tokens): EChartsCoreOption {
 /* 7. Pillar profile: three coloured dots per brand + total tick. */
 function pillars(p: PillarsPayload, t: Tokens): EChartsCoreOption {
   const keys = [
-    ["proeminencia", "Proeminência"],
-    ["valorizacao", "Valorização"],
-    ["fidelidade", "Fidelidade"],
+    ["proeminencia", "Ser encontrada"],
+    ["valorizacao", "Ajudar quem chega"],
+    ["fidelidade", "Manter a conversa"],
   ] as const;
   return {
     ...base(t),
@@ -455,17 +457,17 @@ function pillars(p: PillarsPayload, t: Tokens): EChartsCoreOption {
         symbolSize: 10,
         itemStyle: { color: t.p[k], borderColor: t.paper, borderWidth: 2 },
         data: p.rows.map((r, i) => (r[k] === null ? null : [r[k], i])),
-        tooltip: { formatter: (x: { value: number[] }) => `<b>${p.rows[x.value[1] ?? 0]?.nome}</b><br/>${label}: ${fmt(x.value[0] ?? 0)}` },
+        tooltip: { formatter: (x: { value: number[] }) => `<b>${p.rows[x.value[1] ?? 0]?.nome}</b><br/>${label}: ${fmt(x.value[0] ?? 0, 0)}%` },
         z: 3,
       })),
       {
-        name: "Total",
+        name: "Fatia total",
         type: "scatter",
         symbol: "rect",
         symbolSize: [2, 18],
         itemStyle: { color: t.ink },
         data: p.rows.map((r, i) => (r.total === null ? null : [r.total, i])),
-        tooltip: { formatter: (x: { value: number[] }) => `<b>${p.rows[x.value[1] ?? 0]?.nome}</b><br/>Total: ${fmt(x.value[0] ?? 0)}` },
+        tooltip: { formatter: (x: { value: number[] }) => `<b>${p.rows[x.value[1] ?? 0]?.nome}</b><br/>Fatia total: ${fmt(x.value[0] ?? 0, 0)}%` },
         markLine: {
           silent: true,
           symbol: "none",

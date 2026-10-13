@@ -1,6 +1,6 @@
 ---
 // Five channel indicators as small multiples of ranked bars. Descriptive: they are
-// not added to the total (each is already a sub-metric inside a pillar).
+// not added to the total (each is already a measure inside a pillar).
 import type { Elo, Marca } from "../lib/types.ts";
 import { brandUrl } from "../lib/data.ts";
 import { pct, int, compact } from "../lib/format.ts";
@@ -9,10 +9,10 @@ interface Props { elo: Elo }
 const { elo } = Astro.props;
 
 const canais: { titulo: string; sub: string; pick: (m: Marca) => number | null; fmt: (v: number) => string }[] = [
-  { titulo: "Menção nas IAs", sub: "% das respostas", pick: (m) => m.ia.mencao, fmt: (v) => pct(v, 0) },
-  { titulo: "Resposta ao público", sub: "% dos comentários", pick: (m) => m.resposta.porComentario, fmt: (v) => pct(v, 0) },
-  { titulo: "Busca sem marca", sub: "% no top 10", pick: (m) => m.categoriaTop10, fmt: (v) => pct(v, 0) },
-  { titulo: "Imprensa", sub: "matérias em 12 meses", pick: (m) => m.materias, fmt: (v) => int(v) },
+  { titulo: "Citada pelas IAs", sub: "% das respostas", pick: (m) => m.ia.mencao, fmt: (v) => pct(v, 0) },
+  { titulo: "Responde comentários", sub: "% dos comentários", pick: (m) => m.resposta.porComentario, fmt: (v) => pct(v, 0) },
+  { titulo: "Aparece em buscas gerais", sub: "% das buscas", pick: (m) => m.categoriaTop10, fmt: (v) => pct(v, 0) },
+  { titulo: "Notícias", sub: "matérias em 1 ano", pick: (m) => m.materias, fmt: (v) => int(v) },
   { titulo: "Instagram", sub: "seguidores", pick: (m) => m.seguidores.instagram, fmt: (v) => compact(v) },
 ];
 ---
@@ -30,7 +30,7 @@ const canais: { titulo: string; sub: string; pick: (m: Marca) => number | null; 
             <li class:list={{ top: i === 0 && r.v !== null }}>
               <a href={brandUrl(elo, r.m)}>{r.m.nome}</a>
               <span class="bar"><span style={`width:${r.v === null ? 0 : Math.max(2, (r.v / max) * 100)}%`}></span></span>
-              <span class="v">{r.v === null ? "N/A" : c.fmt(r.v)}</span>
+              <span class="v">{r.v === null ? "—" : c.fmt(r.v)}</span>
             </li>
           ))}
         </ol>

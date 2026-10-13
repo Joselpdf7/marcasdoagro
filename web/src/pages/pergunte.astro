@@ -3,11 +3,11 @@ import Base from "../layouts/Base.astro";
 import { elos } from "../lib/data.ts";
 
 const sugestoes = [
-  "Quem lidera cada elo e com que margem?",
+  "Quem lidera cada setor?",
   "Quais marcas respondem mais aos comentários no Instagram?",
   "Como os assistentes de IA citam as marcas de fertilizantes?",
-  "Por que Bayer e BASF ficam sem total nas sementes?",
-  "O que a Stara faz diferente em Fidelidade?",
+  "Por que Bayer e BASF ficam sem nota nas sementes?",
+  "Por que a Stara conversa mais com o público?",
   "Quais marcas aparecem na busca de categoria sem marca?",
 ];
 const apiUrl = import.meta.env.PUBLIC_API_URL ?? "";
@@ -17,12 +17,12 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? "";
     <div class="ask-head">
       <p class="kicker">Pergunte ao estudo</p>
       <h1 style="font-size:clamp(36px,5vw,64px);">Uma pergunta, <em>a resposta com a fonte.</em></h1>
-      <p class="lead">O assistente responde só com a base de evidências do estudo e cita volume, documento e seção. Se o estudo não traz o dado, ele diz.</p>
+      <p class="lead">Escreva sua dúvida como numa conversa. A resposta vem do estudo e mostra de onde saiu cada informação.</p>
     </div>
 
     <div class="ask-filter" role="group" aria-label="Restringir a um elo">
-      <span class="muted small">Buscar em</span>
-      <button class="chip" type="button" data-elo="" aria-pressed="true">Todos os elos</button>
+      <span class="muted small">Setor</span>
+      <button class="chip" type="button" data-elo="" aria-pressed="true">Todos</button>
       {elos.map((e) => <button class="chip" type="button" data-elo={e.segmento} aria-pressed="false">{e.nome}</button>)}
     </div>
 
@@ -40,7 +40,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL ?? "";
         <button class="btn primary" type="submit" id="send">Perguntar</button>
       </div>
     </form>
-    <p class="fig-caption">Respostas geradas por inteligência artificial a partir da base do estudo. Confira as fontes citadas. Não envie dados pessoais.</p>
+    <p class="fig-caption">Respostas feitas por inteligência artificial. Confira as fontes. Não envie dados pessoais.</p>
   </section>
 </Base>
 

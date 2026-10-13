@@ -9,7 +9,7 @@ const fmtd = (d: number) => {
   return f;
 };
 
-export const NA = "N/A";
+export const NA = "sem dado";
 
 export function n(v: number | null | undefined, digits = 1): string {
   return v === null || v === undefined ? NA : fmtd(digits).format(v);
@@ -55,4 +55,9 @@ export function native(v: number | null | undefined, unit: string): string {
   if (u.startsWith("por 1.000")) return `${n(v, 1)} por mil`;
   if (u.startsWith("cultivares")) return `${int(v)} cultivares`;
   return `${n(v)} ${unit}`;
+}
+
+/** Share of the sector's digital presence, rounded for lay readers: 26.21 → "26%". */
+export function fatia(v: number | null | undefined): string {
+  return v === null || v === undefined ? NA : `${fmtd(0).format(v)}%`;
 }

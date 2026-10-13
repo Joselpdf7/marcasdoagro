@@ -2,101 +2,69 @@
 import { url } from "../lib/url.ts";
 import Base from "../layouts/Base.astro";
 import { PILARES } from "../lib/meta.ts";
-
-const kappa = [
-  ["Defensivos", "540 ocorrências, três revisores com adjudicação; kappa 0,56 a 0,74", "Precisão estimada de 0,81 em amostra menor; segunda revisão ampla prevista"],
-  ["Máquinas", "52 ocorrências; kappa 0,38: a medida vira diagnóstico", "Kappa 0,76 a 0,79"],
-  ["Fertilizantes", "53 ocorrências; kappa 0,67 a 0,83: fica na nota", "0,41 na primeira rodada, que apontou um erro de regra; 0,70 na segunda, cega"],
-  ["Sementes", "49 ocorrências; kappa 0,40: a medida vira diagnóstico", "Kappa 0,78"],
-];
 ---
-<Base title="Método" section="metodo" description="Como o estudo mede a presença digital: quatro pilares, regras unificadas, revisão humana, sensibilidades e limites.">
+<Base title="Como foi feito" section="metodo" description="Como o estudo mediu a presença digital das marcas do agro.">
   <section class="page" style="padding-top:56px;padding-bottom:24px;">
-    <p class="kicker">Método</p>
-    <h1 style="font-size:clamp(40px,6vw,76px);max-width:16ch;">Uma régua, <em>escrita antes da coleta</em></h1>
-    <p class="lead">Universo, cestas de consultas, perguntas e veículos foram definidos por critérios públicos antes de olhar qualquer resultado. Mudanças só por emenda datada, com o motivo e o que já se sabia no momento.</p>
+    <h1 style="font-size:clamp(40px,6vw,76px);max-width:16ch;">Como o estudo <em>foi feito</em></h1>
+    <p class="lead">As regras foram escritas antes de olhar qualquer resultado. O mesmo método vale para os quatro setores.</p>
   </section>
 
   <section class="section">
     <div class="page">
-      <div class="prose">
-        <p class="kicker">A arquitetura</p>
-        <h2>Quatro pilares, três com nota</h2>
-        <p>Cada submétrica tem unidade e fonte declaradas. Para somar unidades diferentes, cada valor vira participação: a parcela da marca no total observado das marcas do painel. A nota do pilar é a média simples das participações; a nota final, a média simples dos três pilares com nota. Nenhuma submétrica pesa mais que outra.</p>
-        <aside class="note"><strong>Por que participação.</strong> Ela torna comparáveis buscas por mês, seguidores e taxas, sem escolher pesos. Pesos alternativos aparecem como sensibilidade, nunca como regra.</aside>
-      </div>
+      <h2>Três perguntas sobre cada marca</h2>
       <div class="multiples" style="margin-top:36px;">
         {PILARES.map((p) => (
           <div style={`border-top:3px solid var(--p-${p.id});padding-top:16px;`}>
-            <h3>{p.nome}</h3>
+            <h3>{p.simples}</h3>
             <p class="muted" style="margin:8px 0 0;">{p.pergunta}</p>
+            <p class="small muted" style="margin:6px 0 0;">No relatório: {p.nome}</p>
           </div>
         ))}
-        <div style="border-top:3px dashed var(--rule-strong);padding-top:16px;">
-          <h3>Advocacia</h3>
-          <p class="muted" style="margin:8px 0 0;">Outras pessoas falam pela marca? Descrita, sem nota, em todos os volumes.</p>
-        </div>
       </div>
+      <p class="lead" style="margin-top:40px;max-width:60ch;">A nota final de cada marca é a média das três. Ela mostra a fatia da marca na presença digital do setor.</p>
     </div>
   </section>
 
   <section class="section">
     <div class="page">
-      <div class="prose">
-        <p class="kicker">As fontes</p>
-        <h2>O que foi medido</h2>
-        <ul>
-          <li>Buscas ao vivo e bases de dados de busca: busca pela marca com intenção do segmento, palavras-chave orgânicas e cerca de cem consultas de categoria sem marca por elo.</li>
-          <li>Perfis oficiais no Instagram, no Facebook e no YouTube: seguidores, cadência, interações e resposta da marca a quem comenta.</li>
-          <li>Quatro assistentes de inteligência artificial (ChatGPT, Gemini, Copilot e Claude): sessenta perguntas de produtor por elo, três vezes cada, com peso igual.</li>
-          <li>Quinze veículos de imprensa por elo, doze meses: matérias em que a marca é o assunto.</li>
-          <li>Sites das marcas: autoatendimento em dez itens, desempenho e acessibilidade em três páginas comparáveis.</li>
-        </ul>
-        <aside class="note"><strong>Janela.</strong> Doze meses para o que é fluxo, de setembro de 2025 a setembro de 2026 conforme o volume. Um dia para o que é foto, como seguidores.</aside>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="page">
-      <div class="prose">
-        <p class="kicker">Revisão humana</p>
-        <h2>Concordância medida, não presumida</h2>
-        <p>As classes que decidem a nota passaram por revisão humana em amostra, com concordância medida pelo coeficiente kappa. Quando a concordância não alcança 0,6, a medida sai da nota e vira diagnóstico.</p>
-      </div>
-      <div class="table-wrap" style="margin-top:24px;">
-        <table class="t">
-          <thead><tr><th>Elo</th><th>Fontes citadas pelas IAs</th><th>Imprensa</th></tr></thead>
-          <tbody>{kappa.map(([a, b, c]) => <tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>)}</tbody>
-        </table>
-      </div>
+      <h2>O que foi medido</h2>
+      <ul class="plain" style="margin-top:24px;">
+        <li><b>Google.</b> Quantas vezes o nome da marca é buscado e se ela aparece em buscas gerais, como "fungicida soja".</li>
+        <li><b>Redes sociais.</b> Seguidores, frequência de posts, curtidas e se a marca responde a quem comenta.</li>
+        <li><b>Inteligência artificial.</b> Perguntas de produtor feitas ao ChatGPT, Gemini, Copilot e Claude.</li>
+        <li><b>Imprensa.</b> Notícias sobre a marca em 15 veículos por setor, durante um ano.</li>
+        <li><b>Sites.</b> Se o site tem onde comprar, contato e catálogo, e se é rápido.</li>
+      </ul>
     </div>
   </section>
 
   <section class="section">
     <div class="page grid-2">
       <div>
-        <p class="kicker">Sensibilidades</p>
-        <h3>Uma diferença só vira posição quando resiste a tudo</h3>
-        <p class="muted" style="margin-top:12px;">Cada volume publicou a ordem do painel sob: percentil em vez de participação; z-score aparado; retirada de cada pilar e de cada submétrica; retirada de todo o sinal de IA; dois mil sorteios de pesos aleatórios; pesos por uso dos assistentes; AI Overview do Google como quinta superfície; reamostragem das unidades de medida; painel do piloto; e as regras anteriores a cada emenda. Em nenhum volume a primeira posição mudou.</p>
+        <h3>Conferido por pessoas</h3>
+        <p class="muted" style="margin-top:12px;">Parte da classificação foi revisada por pessoas. Quando os revisores discordaram muito, a medida saiu da nota.</p>
       </div>
       <div>
-        <p class="kicker">Fora da nota</p>
-        <h3>Diagnósticos publicados, mas sem peso</h3>
-        <p class="muted" style="margin-top:12px;">Autoridade do domínio e dados de campo de experiência de página ficaram fora da nota em todos os volumes, porque marcas em subpasta de domínio global não são comparáveis a marcas com domínio próprio. Fonte própria citada pelas IAs ficou fora nas máquinas e nas sementes, por concordância insuficiente. Nos fertilizantes, a busca por produto ficou fora porque 94% do volume se concentrava em uma marca.</p>
+        <h3>Testado de vários jeitos</h3>
+        <p class="muted" style="margin-top:12px;">O cálculo foi refeito de muitas formas diferentes. O líder de cada setor nunca mudou. Abaixo dele, as posições variam, e por isso o site mostra os empates.</p>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="page">
-      <div class="prose">
-        <p class="kicker">Limites</p>
-        <h2>O que os painéis não dizem</h2>
-        <p>Os painéis são comparativos e dependem de quem está neles. Não medem vendas, participação de mercado nem preferência do produtor, e não afirmam causa. Participações só se comparam dentro do mesmo elo. Advocacia não tem nota em nenhum volume. As cestas de produtos, modelos e cultivares foram validadas por especialista só nos defensivos. Matérias atrás de assinatura ficaram fora da classificação de imprensa.</p>
-        <aside class="note"><strong>Próximos passos.</strong> Repetir as medições em seis e doze meses, para que o painel passe de fotografia a filme; desenhar e medir o pilar Advocacia; ampliar a revisão humana onde ela ainda está pendente.</aside>
-        <p><a href={url("/documentos/")}>Consultar a base de evidências</a> · <a href={url("/relatorios/")}>Baixar os relatórios</a></p>
-      </div>
+      <h2>O que o estudo não diz</h2>
+      <ul class="plain" style="margin-top:24px;">
+        <li>Não mede vendas nem quanto cada marca vende.</li>
+        <li>Não diz o que o produtor prefere.</li>
+        <li>Não compara marcas de setores diferentes.</li>
+      </ul>
+      <p style="margin-top:28px;"><a href={url("/documentos/")}>Ver os documentos do estudo</a></p>
     </div>
   </section>
 </Base>
+<style>
+  .plain { list-style: none; padding: 0; margin: 0; max-width: 70ch; border-top: 1px solid var(--rule-strong); }
+  .plain li { padding: 14px 0; border-bottom: 1px solid var(--rule); color: var(--ink-2); }
+  .plain b { color: var(--ink); font-weight: 600; }
+</style>

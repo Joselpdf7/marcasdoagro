@@ -7,10 +7,10 @@ export const ELOS_META: Record<string, { slug: string; segmento: string; nome: s
   "4": { slug: "sementes", segmento: "sementes", nome: "Sementes", arquivo: "sementes", curto: "Sementes" },
 };
 
-export const PILARES: { id: Pilar; nome: string; pergunta: string }[] = [
-  { id: "proeminencia", nome: "Proeminência", pergunta: "Quando o produtor procura, a marca aparece?" },
-  { id: "valorizacao", nome: "Valorização", pergunta: "Quando o produtor chega, o que a marca entrega?" },
-  { id: "fidelidade", nome: "Fidelidade", pergunta: "A relação continua?" },
+export const PILARES: { id: Pilar; nome: string; simples: string; pergunta: string }[] = [
+  { id: "proeminencia", nome: "Proeminência", simples: "Ser encontrada", pergunta: "Quando o produtor procura, a marca aparece?" },
+  { id: "valorizacao", nome: "Valorização", simples: "Ajudar quem chega", pergunta: "O site e os conteúdos ajudam o produtor?" },
+  { id: "fidelidade", nome: "Fidelidade", simples: "Manter a conversa", pergunta: "A marca conversa com quem a segue?" },
 ];
 
 /** Sub-metrics outside the score in each volume (diagnostic or descriptive). */
@@ -32,7 +32,7 @@ export function SUBMETRICAS(codigo: string): { nome: string; descricao: string }
     P3: ["Palavras-chave orgânicas", "Palavras-chave em que o site da marca aparece na busca orgânica."],
     P4: ["Busca de categoria", "Parcela das consultas sem marca em que a marca tem página própria no top 10."],
     P5: [`Seguidores no ${rede}`, `Seguidores do perfil oficial no ${rede}, no dia da coleta.`],
-    P6: ["Imprensa", "Matérias em que a marca é o assunto nos 15 veículos do elo, em 12 meses."],
+    P6: ["Imprensa", "Matérias em que a marca é o assunto nos 15 veículos do setor, em 12 meses."],
     P7a: ["Menção nas IAs", "Parcela das respostas dos quatro assistentes em que a marca aparece."],
     P7b: ["Primeira citação nas IAs", "Parcela das respostas em que a marca é a primeira do painel a aparecer."],
     P7c: ["Menção só ao grupo", "Respostas que citam só o nome do grupo, sem a divisão. Fora da nota."],

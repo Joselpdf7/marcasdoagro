@@ -9,7 +9,6 @@ import type {
   SlopePayload,
   StripPayload,
 } from "./charts/payloads.ts";
-import { median } from "./format.ts";
 import { anchor } from "./anchor.ts";
 import { url } from "./url.ts";
 export { anchor };
@@ -62,7 +61,7 @@ export function slopePayload(e: Elo, a: Pilar = "proeminencia", b: Pilar = "fide
     .filter((m) => m.pilares[a] !== null && m.pilares[b] !== null)
     .map((m) => ({ nome: m.nome, a: m.pilares[a]!, b: m.pilares[b]! }));
   const max = Math.max(...rows.flatMap((r) => [r.a, r.b]));
-  return { kind: "slope", left: "Proeminência", right: "Fidelidade", rows, yMax: Math.ceil(max / 5) * 5 };
+  return { kind: "slope", left: "Ser encontrada", right: "Manter a conversa", rows, yMax: Math.ceil(max / 5) * 5 };
 }
 
 export function dumbbellPayload(e: Elo): DumbbellPayload {
@@ -86,7 +85,7 @@ export function stripAcrossElos(
         const v = pick(m);
         return v === null ? [] : [{ nome: m.nome, v }];
       });
-      return { label: shortName(e), points, median: median(points.map((p) => p.v)) };
+      return { label: shortName(e), points, median: null };
     }),
   };
 }
@@ -98,14 +97,14 @@ export function sitePayload(e: Elo): StripPayload {
   const name = (slug: string) => e.marcas.find((m) => m.slug === slug)?.nome ?? slug;
   const row = (label: string, s: typeof v5, scale: number) => {
     const points = (s?.valores ?? []).flatMap((v) => (v.valor === null ? [] : [{ nome: name(v.marca), v: v.valor * scale }]));
-    return { label, points, median: median(points.map((p) => p.v)) };
+    return { label, points, median: null };
   };
   return {
     kind: "strip",
     unit: "",
     xMax: 100,
     labelAbove: 101,
-    rows: [row("Autoatendimento", v5, 100), row("Desempenho", v6, 1)],
+    rows: [row("Recursos do site", v5, 100), row("Velocidade", v6, 1)],
   };
 }
 

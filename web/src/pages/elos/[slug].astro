@@ -8,7 +8,7 @@ import Triangle from "../../components/Triangle.astro";
 import Canais from "../../components/Canais.astro";
 import { elos, eloBySlug, ranked, pillarsPayload, positionsPayload, dumbbellPayload, brandUrl } from "../../lib/data.ts";
 import { PILARES } from "../../lib/meta.ts";
-import { n, pct, compact, int } from "../../lib/format.ts";
+import { fatia, pct, compact, int } from "../../lib/format.ts";
 
 export function getStaticPaths() {
   return elos.map((e) => ({ params: { slug: e.slug } }));
@@ -19,18 +19,18 @@ const r = ranked(e);
 const comTotal = r.filter((m) => m.total !== null);
 const maxTotal = Math.max(...comTotal.map((m) => m.total!));
 const semTotal = r.filter((m) => m.total === null);
-const pillarMax = Math.ceil(Math.max(...e.marcas.flatMap((m) => Object.values(m.pilares).filter((v): v is number => v !== null))) / 5) * 5;
+const pillarMax = Math.max(...e.marcas.flatMap((m) => Object.values(m.pilares).filter((v): v is number => v !== null))) * 1.05;
 const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
 ---
 <Base title={e.nome} section="elos" description={`Painel de presença digital de ${e.nome}: ${e.marcas.length} ${unidade}, líder ${r[0]?.nome}.`}>
   <section class="page" style="padding-top: 56px; padding-bottom: 24px;">
-    <p class="breadcrumb"><a href={url("/")}>Panorama</a> / <a href={url("/elos/")}>Elos</a> / {e.nome}</p>
-    <p class="kicker">Volume {e.volume} · {e.marcas.length} {unidade}</p>
+    <p class="breadcrumb"><a href={url("/")}>Panorama</a> / <a href={url("/elos/")}>Setores</a> / {e.nome}</p>
+    <p class="kicker">{e.marcas.length} {unidade}</p>
     <h1 style="font-size: clamp(40px, 6vw, 76px);">{e.nome}</h1>
+    <p class="lead" style="margin-top:14px;">Quanto maior o triângulo, mais forte a marca no digital. O número é a fatia de cada uma no setor.</p>
     <ul class="legend tri-legend">
-      {PILARES.map((p) => <li><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.nome}</li>)}
-      <li><span class="swatch line" style="background:none;border-top:1px dashed var(--ink-3);"></span>igualdade</li>
-      <li class="muted">no centro, a participação</li>
+      {PILARES.map((p) => <li><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.simples}</li>)}
+      <li><span class="swatch line" style="background:none;border-top:1px dashed var(--ink-3);"></span>média do setor</li>
     </ul>
     <div class="tris">
       {r.map((m, i) => (
@@ -41,7 +41,6 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
 
   <section class="section">
     <div class="page">
-      <p class="kicker">Nos canais</p>
       <h2 style="margin-bottom:32px;">Onde cada {e.unidade} aparece</h2>
       <Canais elo={e} />
     </div>
@@ -55,14 +54,14 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
         <table class="t" data-sortable>
           <thead>
             <tr>
-              <th class="num" aria-sort="ascending"><button type="button" data-col="0" data-type="num">Pos.</button></th>
+              <th class="num" aria-sort="ascending"><button type="button" data-col="0" data-type="num">Posição</button></th>
               <th><button type="button" data-col="1" data-type="text">{e.unidade === "grupo" ? "Grupo" : "Marca"}</button></th>
-              <th class="num"><button type="button" data-col="2" data-type="num">Participação</button></th>
+              <th class="num"><button type="button" data-col="2" data-type="num">Fatia</button></th>
               <th></th>
-              {PILARES.map((p, i) => <th class="num"><button type="button" data-col={String(4 + i)} data-type="num">{p.nome}</button></th>)}
-              <th class="num"><button type="button" data-col="7" data-type="num">Menção IA</button></th>
-              <th class="num"><button type="button" data-col="8" data-type="num">Resposta</button></th>
-              <th class="num"><button type="button" data-col="9" data-type="num">Categoria</button></th>
+              {PILARES.map((p, i) => <th class="num"><button type="button" data-col={String(4 + i)} data-type="num">{p.simples}</button></th>)}
+              <th class="num"><button type="button" data-col="7" data-type="num">Citada pelas IAs</button></th>
+              <th class="num"><button type="button" data-col="8" data-type="num">Responde comentários</button></th>
+              <th class="num"><button type="button" data-col="9" data-type="num">Buscas gerais</button></th>
               <th class="num"><button type="button" data-col="10" data-type="num">Imprensa</button></th>
               <th class="num"><button type="button" data-col="11" data-type="num">Instagram</button></th>
             </tr>
@@ -70,11 +69,11 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
           <tbody>
             {r.map((m, i) => (
               <tr>
-                <td class="num" data-v={m.posicaoModal ?? 99}>{m.posicaoModal ?? <span class="na">N/A</span>}</td>
+                <td class="num" data-v={m.posicaoModal ?? 99}>{m.posicaoModal ?? <span class="na">—</span>}</td>
                 <td class="name" data-v={m.nome}><a href={brandUrl(e, m)}>{m.nome}</a></td>
-                <td class="num" data-v={m.total ?? -1}>{m.total === null ? <span class="na">sem total</span> : n(m.total)}</td>
+                <td class="num" data-v={m.total ?? -1}>{m.total === null ? <span class="na">sem nota</span> : fatia(m.total)}</td>
                 <td><Spark value={m.total} max={maxTotal} reference={e.referencia} highlight={i === 0} /></td>
-                {PILARES.map((p) => <td class="num" data-v={m.pilares[p.id] ?? -1}>{n(m.pilares[p.id])}</td>)}
+                {PILARES.map((p) => <td class="num" data-v={m.pilares[p.id] ?? -1}>{fatia(m.pilares[p.id])}</td>)}
                 <td class="num" data-v={m.ia.mencao ?? -1}>{pct(m.ia.mencao)}</td>
                 <td class="num" data-v={m.resposta.porComentario ?? -1}>{pct(m.resposta.porComentario)}</td>
                 <td class="num" data-v={m.categoriaTop10 ?? -1}>{pct(m.categoriaTop10)}</td>
@@ -85,11 +84,7 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
           </tbody>
         </table>
       </div>
-      <p class="fig-caption">
-        Pos. = posição modal em 2.000 sorteios de pesos. Resposta = respostas da marca por comentário no Instagram. Categoria =
-        consultas sem marca com página própria no top 10. Imprensa = matérias em que a marca é o assunto, 12 meses.
-        {semTotal.length > 0 && ` ${semTotal.map((m) => m.nome).join(" e ")} ficam sem total: nenhuma submarca tem perfil próprio com cobertura suficiente para Fidelidade, e o estudo não soma perfis genéricos de grupo.`}
-      </p>
+      {semTotal.length > 0 && <p class="fig-caption">{semTotal.map((m) => m.nome).join(" e ")} ficam sem nota porque não têm perfis próprios nas redes para medir a conversa com o público.</p>}
       </details>
     </div>
   </section>
@@ -97,20 +92,18 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
   <section class="section">
     <div class="page grid-2">
       <div>
-        <p class="kicker">Pilares</p>
-        <h3>Onde cada {e.unidade} ganha e perde</h3>
-        <p class="muted small" style="margin-top:10px;">Pontos: participação em cada pilar. Traço vertical: total. A faixa cinza mostra a distância entre o melhor e o pior pilar da marca.</p>
+        <h3>Pontos fortes e fracos</h3>
+        <p class="muted small" style="margin-top:10px;">Cada cor é um pilar. O traço é a fatia total.</p>
         <Chart payload={pillarsPayload(e)} label={`Participação por pilar em ${e.nome}`}>
           <ul slot="legend" class="legend" style="margin-top:14px;">
-            {PILARES.map((p) => <li><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.nome}</li>)}
-            <li><span class="swatch line" style="background:var(--ink);width:2px;height:12px;"></span>Total</li>
+            {PILARES.map((p) => <li><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.simples}</li>)}
+            <li><span class="swatch line" style="background:var(--ink);width:2px;height:12px;"></span>Fatia total</li>
           </ul>
         </Chart>
       </div>
       <div>
-        <p class="kicker">Empates</p>
-        <h3>Probabilidade de cada posição</h3>
-        <p class="muted small" style="margin-top:10px;">Parcela de 2.000 sorteios de pesos aleatórios em que a marca terminou em cada posição. Números em %.</p>
+        <h3>Quem está empatado</h3>
+        <p class="muted small" style="margin-top:10px;">Chance de cada marca ficar em cada posição. Quanto mais escura a célula, mais certa a posição.</p>
         <Chart payload={positionsPayload(e)} label={`Probabilidade por posição em ${e.nome}`} />
       </div>
     </div>
@@ -119,13 +112,8 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
   <section class="section">
     <div class="page">
       <div class="prose">
-        <p class="kicker">Submétricas</p>
-        <h2>As {e.submetricas.length} medidas, marca a marca</h2>
-        <p class="lead">Cada barra é a participação da marca naquela submétrica. Leia por coluna para ver quem domina cada medida e por linha para ver o perfil da marca.</p>
-        <aside class="note">
-          Colunas com título tracejado ficam <strong>fora da nota</strong>: são diagnósticos ou medidas descritivas. Passe o mouse
-          ou toque numa célula para ver o valor nativo. Vazio é N/A, nunca zero.
-        </aside>
+        <h2>Todas as medidas</h2>
+        <p class="lead">Barra maior, marca mais forte naquela medida. Em itálico, as medidas que não entram na nota.</p>
       </div>
       <SubMatrix elo={e} />
     </div>
@@ -134,36 +122,32 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
   <section class="section">
     <div class="page grid-2">
       <div>
-        <p class="kicker">Assistentes de IA</p>
-        <h3>Quem é lembrado e quem é lembrado primeiro</h3>
-        <p class="muted small" style="margin-top:10px;">Sessenta perguntas de produtor, três vezes a cada um de quatro assistentes (ChatGPT, Gemini, Copilot e Claude).</p>
+        <h3>Quem as IAs citam</h3>
+        <p class="muted small" style="margin-top:10px;">Perguntas de produtor feitas ao ChatGPT, Gemini, Copilot e Claude.</p>
         <Chart payload={dumbbellPayload(e)} label={`Menção e primeira citação pelas IAs em ${e.nome}`}>
           <ul slot="legend" class="legend" style="margin-top:14px;">
-            <li><span class="swatch" style="background:var(--brand-ink)"></span>Primeira citação</li>
-            <li><span class="swatch" style="border:1.5px solid var(--ink-2)"></span>Menção</li>
+            <li><span class="swatch" style="background:var(--brand-ink)"></span>Citada primeiro</li>
+            <li><span class="swatch" style="border:1.5px solid var(--ink-2)"></span>Citada</li>
           </ul>
         </Chart>
       </div>
       <div>
         {e.marcas.some((m) => m.submarcas.length) ? (
           <>
-            <p class="kicker">Submarcas</p>
-            <h3>Grupos e as marcas que falam com o produtor</h3>
-            <p class="muted small" style="margin-top:10px;">Busca e escopo somam as submarcas sem dupla contagem; audiência e engajamento valem pela maior marca própria do grupo.</p>
+            <h3>As marcas de cada grupo</h3>
             <dl style="margin-top:22px;">
               {r.map((m) => (
                 <div style="display:grid;grid-template-columns:140px 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule);">
                   <dt><a href={brandUrl(e, m)}>{m.nome}</a></dt>
-                  <dd style="margin:0;color:var(--ink-2);">{m.submarcas.map((s) => s.nome + (s.descritiva ? " (descritiva)" : "")).join(", ")}</dd>
+                  <dd style="margin:0;color:var(--ink-2);">{m.submarcas.map((s) => s.nome).join(", ")}</dd>
                 </div>
               ))}
             </dl>
           </>
         ) : (
           <>
-            <p class="kicker">Pergunte</p>
-            <h3>Quer o porquê de algum número?</h3>
-            <p class="muted" style="margin-top:12px;">O assistente responde com a base de evidências deste volume e cita a fonte.</p>
+            <h3>Ficou alguma dúvida?</h3>
+            <p class="muted" style="margin-top:12px;">Pergunte ao estudo. A resposta vem com a fonte.</p>
           </>
         )}
         <p style="margin-top:28px;"><a class="btn primary" href={url(`/pergunte/?elo=${e.segmento}`)}>Perguntar sobre {e.nome.toLowerCase()}</a></p>
@@ -176,8 +160,8 @@ const unidade = e.unidade === "grupo" ? "grupos" : "marcas";
   .tri-legend { margin: 28px 0 8px; }
   .tris {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(170px, 45%), 1fr));
-    gap: 28px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
+    gap: 36px 28px;
     margin-top: 12px;
   }
 </style>

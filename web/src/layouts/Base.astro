@@ -19,9 +19,9 @@ const full = title === "MarcasdoAgro" ? "MarcasdoAgro · Panorama da presença d
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const nav = [
   { href: url("/"), id: "panorama", label: "Panorama" },
-  { href: url("/elos/"), id: "elos", label: "Elos" },
+  { href: url("/elos/"), id: "elos", label: "Setores" },
   { href: url("/marcas/"), id: "marcas", label: "Marcas" },
-  { href: url("/metodo/"), id: "metodo", label: "Método" },
+  { href: url("/metodo/"), id: "metodo", label: "Como foi feito" },
   { href: url("/relatorios/"), id: "relatorios", label: "Relatórios" },
 ];
 ---
@@ -74,13 +74,13 @@ const nav = [
       <div class="page">
         <div>
           <span class="logo-chip"><img src={url("/olhar-publico.png")} alt="Olhar Público" width="226" height="71" /></span>
-          <p>Panorama da presença digital do agro brasileiro. Estudo independente realizado pelo Olhar Público, setembro de 2025 a setembro de 2026.</p>
+          <p>Presença digital do agro brasileiro. Estudo do Olhar Público, de setembro de 2025 a setembro de 2026.</p>
         </div>
         <div>
-          <p><b>O estudo</b><br /><a href={url("/metodo/")}>Método e limites</a><br /><a href={url("/documentos/")}>Base de evidências</a><br /><a href={url("/relatorios/")}>Relatórios em PDF</a></p>
+          <p><b>O estudo</b><br /><a href={url("/metodo/")}>Como foi feito</a><br /><a href={url("/documentos/")}>Documentos</a><br /><a href={url("/relatorios/")}>Relatórios</a></p>
         </div>
         <div>
-          <p><b>Leitura</b><br />Os painéis não medem vendas, participação de mercado nem preferência do produtor. Participações só se comparam dentro do mesmo elo. N/A nunca é zero.</p>
+          <p><b>Importante</b><br />O estudo mede presença digital, não vendas. Compare marcas só dentro do mesmo setor.</p>
         </div>
       </div>
     </footer>

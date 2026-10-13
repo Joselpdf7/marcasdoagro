@@ -5,8 +5,8 @@ describe("format", () => {
   it("uses Brazilian decimals and never turns null into zero", () => {
     expect(n(26.21)).toBe("26,2");
     expect(pct(43.8)).toBe("43,8%");
-    expect(n(null)).toBe("N/A");
-    expect(pct(undefined)).toBe("N/A");
+    expect(n(null)).toBe("sem dado");
+    expect(pct(undefined)).toBe("sem dado");
   });
   it("compacts follower counts", () => {
     expect(compact(244801)).toBe("245 mil");
@@ -29,6 +29,6 @@ describe("native", () => {
     expect(native(160110, "seguidores")).toBe("160 mil seguidores");
     expect(native(7020, "buscas/mês, marca + modelo")).toBe("7.020 buscas/mês");
     expect(native(2.7, "por 1.000 seguidores")).toBe("2,7 por mil");
-    expect(native(null, "taxa")).toBe("N/A");
+    expect(native(null, "taxa")).toBe("sem dado");
   });
 });

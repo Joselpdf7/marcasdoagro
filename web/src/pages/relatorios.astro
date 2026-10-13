@@ -5,12 +5,12 @@ import { statSync } from "node:fs";
 import { join } from "node:path";
 
 const files = [
-  ["01_Sintese_da_Serie.pdf", "Síntese da série", "Leitura transversal dos quatro elos, com a tabela mestra."],
-  ["02_Volume_1_Defensivos.pdf", "Volume 1 · Defensivos agrícolas", "Oito marcas, 28 submétricas."],
-  ["03_Volume_2_Maquinas_Agricolas.pdf", "Volume 2 · Máquinas agrícolas", "Oito marcas, 28 submétricas."],
-  ["04_Volume_3_Fertilizantes.pdf", "Volume 3 · Fertilizantes", "Nove marcas, 28 submétricas."],
-  ["05_Volume_4_Sementes.pdf", "Volume 4 · Sementes", "Oito grupos com 25 submarcas, 30 submétricas."],
-  ["00_Serie_Completa.pdf", "Série completa", "Síntese e os quatro volumes num único arquivo."],
+  ["01_Sintese_da_Serie.pdf", "Síntese da série", "Resumo dos quatro setores."],
+  ["02_Volume_1_Defensivos.pdf", "Volume 1 · Defensivos agrícolas", "Oito marcas."],
+  ["03_Volume_2_Maquinas_Agricolas.pdf", "Volume 2 · Máquinas agrícolas", "Oito marcas."],
+  ["04_Volume_3_Fertilizantes.pdf", "Volume 3 · Fertilizantes", "Nove marcas."],
+  ["05_Volume_4_Sementes.pdf", "Volume 4 · Sementes", "Oito grupos de empresas."],
+  ["00_Serie_Completa.pdf", "Série completa", "Resumo e os quatro volumes num só arquivo."],
 ] as const;
 const size = (f: string) => {
   try {
@@ -24,7 +24,7 @@ const size = (f: string) => {
   <section class="page" style="padding-top:56px;padding-bottom:96px;">
     <p class="kicker">Relatórios</p>
     <h1 style="font-size:clamp(40px,6vw,76px);">Os volumes em PDF</h1>
-    <p class="lead">Cada volume tem de 100 a 150 páginas, com sumário executivo, método, painel, capítulo por marca, limites e anexos de evidência.</p>
+    <p class="lead">O estudo completo, um volume por setor.</p>
     <ul class="reports">
       {files.map(([f, t, d]) => (
         <li>

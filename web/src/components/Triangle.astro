@@ -1,8 +1,9 @@
 ---
-// Pillar triangle: each vertex is a pillar; distance from the centre is the brand's
-// share in that pillar (same scale for every brand of the elo). Dashed triangle =
-// equality. The overall share sits in the middle.
-import { n } from "../lib/format.ts";
+// Pillar triangle: each corner is a pillar; the further the coloured dot from the
+// centre, the stronger the brand there. Dashed triangle = sector average.
+// The brand's share sits in the centre when it fits, otherwise just below the shape,
+// so it never covers the drawing.
+import { fatia, n } from "../lib/format.ts";
 import { PILARES } from "../lib/meta.ts";
 import type { Pilar } from "../lib/types.ts";
 
@@ -18,59 +19,55 @@ interface Props {
   /** "propria": scale to the brand's own strongest pillar (profile view). */
   escala?: "painel" | "propria";
 }
-const { nome, href, pilares, total, max: panelMax, referencia, destaque = false, size = 200, escala = "painel" } = Astro.props;
+const { nome, href, pilares, total, max: panelMax, referencia, destaque = false, size = 260, escala = "painel" } = Astro.props;
 const own = Math.max(referencia, ...Object.values(pilares).filter((v): v is number => v !== null));
-const max = escala === "propria" ? own * 1.15 : panelMax;
-const digits = escala === "propria" ? 1 : 0;
+const max = escala === "propria" ? own * 1.1 : panelMax;
 
 const W = 200;
-const c = { x: 100, y: 100 };
-const R = 72;
+const H = 176;
+const c = { x: 100, y: 102 };
+const R = 88;
 const angle: Record<Pilar, number> = { proeminencia: -90, valorizacao: 30, fidelidade: 150 };
+const ids: Pilar[] = ["proeminencia", "valorizacao", "fidelidade"];
 const pt = (p: Pilar, v: number) => {
   const a = (angle[p] * Math.PI) / 180;
   const r = (Math.min(v, max) / max) * R;
-  return { x: c.x + r * Math.cos(a), y: c.y + r * Math.sin(a) };
+  return { x: c.x + r * Math.cos(a), y: c.y + r * Math.sin(a), r };
 };
 const poly = (vals: [Pilar, number][]) => vals.map(([p, v]) => pt(p, v)).map((q) => `${q.x.toFixed(1)},${q.y.toFixed(1)}`).join(" ");
-const ids: Pilar[] = ["proeminencia", "valorizacao", "fidelidade"];
 const data = ids.flatMap((p) => (pilares[p] === null ? [] : [[p, pilares[p]] as [Pilar, number]]));
-const label = (p: Pilar) => {
-  const a = (angle[p] * Math.PI) / 180;
-  return { x: c.x + (R + 16) * Math.cos(a), y: c.y + (R + 16) * Math.sin(a) + 4 };
-};
+const pts = data.map(([p, v]) => pt(p, v));
+
+// Number placement: centre if every corner of the shape is far enough, else under the shape.
+const fits = pts.length === 3 && Math.min(...pts.map((q) => q.r)) >= 26;
+const centroid = pts.length === 3 ? { x: pts.reduce((a, q) => a + q.x, 0) / 3, y: pts.reduce((a, q) => a + q.y, 0) / 3 } : c;
+const numX = fits ? centroid.x : c.x;
+const numY = fits ? centroid.y + 6 : Math.max(c.y + 6, ...pts.map((q) => q.y)) + 18;
+
 const ink = destaque ? "var(--brand-ink)" : "var(--ink-2)";
-const desc = `${nome}: participação ${n(total)}. ${PILARES.map((p) => `${p.nome} ${n(pilares[p.id])}`).join(", ")}.`;
+const desc = `${nome}: fatia de ${fatia(total)}. ${PILARES.map((p) => `${p.simples}: ${n(pilares[p.id])}`).join(". ")}.`;
 const Tag = href ? "a" : "div";
 ---
 <Tag class:list={["tri", { destaque }]} href={href} style={`--tri-size:${size}px`}>
-  <svg viewBox={`0 0 ${W} 166`} role="img" aria-label={desc}>
+  <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={desc}>
     <title>{desc}</title>
-    <polygon points={poly(ids.map((p) => [p, max]))} fill="none" stroke="var(--rule)" stroke-width="1" />
+    <polygon points={poly(ids.map((p) => [p, max]))} fill="none" stroke="var(--rule-strong)" stroke-width="1" />
     {ids.map((p) => {
       const q = pt(p, max);
       return <line x1={c.x} y1={c.y} x2={q.x} y2={q.y} stroke="var(--rule)" stroke-width="1" />;
     })}
     <polygon points={poly(ids.map((p) => [p, referencia]))} fill="none" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="3 3" />
     {data.length === 3 ? (
-      <polygon points={poly(data)} fill={ink} fill-opacity={destaque ? 0.16 : 0.08} stroke={ink} stroke-width={destaque ? 2 : 1.4} stroke-linejoin="round" />
+      <polygon points={poly(data)} fill={ink} fill-opacity={destaque ? 0.14 : 0.07} stroke={ink} stroke-width={destaque ? 2 : 1.5} stroke-linejoin="round" />
     ) : (
-      data.length === 2 && <polyline points={poly(data)} fill="none" stroke={ink} stroke-width="1.4" />
+      data.length === 2 && <polyline points={poly(data)} fill="none" stroke={ink} stroke-width="1.5" />
     )}
-    {data.map(([p, v]) => {
-      const q = pt(p, v);
-      return <circle cx={q.x} cy={q.y} r="4.5" fill={`var(--p-${p})`} stroke="var(--paper)" stroke-width="1.5" />;
-    })}
-    {ids.map((p) => {
-      const l = label(p);
-      return (
-        <text x={l.x} y={l.y} text-anchor="middle" class="tri-v">{n(pilares[p], digits)}</text>
-      );
-    })}
-    <text x={c.x} y={c.y + 9} text-anchor="middle" class="tri-total">{total === null ? "—" : n(total)}</text>
+    {pts.map((q, i) => (
+      <circle cx={q.x} cy={q.y} r="4" fill={`var(--p-${data[i]![0]})`} stroke="var(--paper)" stroke-width="1.5" />
+    ))}
+    <text x={numX} y={numY} text-anchor="middle" class="tri-total">{total === null ? "sem nota" : fatia(total)}</text>
   </svg>
-  <span class="tri-name">{nome}</span>
-  {total === null && <span class="tri-note">sem total</span>}
+  {nome && <span class="tri-name">{nome}</span>}
 </Tag>
 
 <style>
@@ -90,34 +87,27 @@ const Tag = href ? "a" : "div";
     overflow: visible;
   }
   .tri-total {
-    font: 400 26px var(--serif);
+    font: 500 15px var(--sans);
     fill: var(--ink);
     paint-order: stroke;
     stroke: var(--paper);
-    stroke-width: 6px;
+    stroke-width: 4px;
     stroke-linejoin: round;
-    font-variant-numeric: lining-nums;
+    font-variant-numeric: lining-nums tabular-nums;
   }
   .destaque .tri-total {
     fill: var(--brand-ink);
-    font-size: 30px;
-  }
-  .tri-v {
-    font: 500 10.5px var(--sans);
-    fill: var(--ink-3);
+    font-weight: 600;
+    font-size: 17px;
   }
   .tri-name {
-    font: 500 14px/1.2 var(--sans);
-    margin-top: 2px;
+    font: 500 15px/1.2 var(--sans);
+    margin-top: 4px;
     text-align: center;
   }
   .destaque .tri-name {
     color: var(--brand-ink);
     font-weight: 600;
-  }
-  .tri-note {
-    font-size: 11.5px;
-    color: var(--ink-3);
   }
   a.tri:hover .tri-name {
     text-decoration: underline;

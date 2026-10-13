@@ -14,7 +14,7 @@ const marcas = ranked(elo);
   const subs = elo.submetricas.filter((s) => s.pilar === p.id);
   return (
     <div class="matrix-block">
-      <h3 class="matrix-title"><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.nome}<span class="muted small">{p.pergunta}</span></h3>
+      <h3 class="matrix-title"><span class="swatch" style={`background:var(--p-${p.id})`}></span>{p.simples}<span class="muted small">{p.pergunta}</span></h3>
       <div class="table-wrap">
         <table class="t matrix">
           <thead>

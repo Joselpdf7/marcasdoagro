@@ -6,7 +6,7 @@ const h = 10;
 const x = (v: number) => Math.max(0, Math.min(width, (v / max) * width));
 ---
 {value === null ? (
-  <span class="na">N/A</span>
+  <span class="na">—</span>
 ) : (
   <svg class="spark" width={width} height={h} viewBox={`0 0 ${width} ${h}`} aria-hidden="true">
     <rect x="0" y="4" width={width} height="2" fill="var(--rule)" />
